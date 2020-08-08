@@ -1,0 +1,12 @@
+#parent_order
+{
+
+}
+table
+{
+    border: 1;
+}
+#child_order
+{
+    display: inline;
+}

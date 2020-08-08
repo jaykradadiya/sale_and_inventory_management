@@ -1,0 +1,108 @@
+*{
+    margin: 0;
+    padding: 0;
+    user-select: none;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+
+}
+/* up header */
+
+.upnav{
+    display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 10px;
+  top: 0;
+  width: 100%;
+  background: linear-gradient(90deg, #2D9CDB 48.85%, rgba(45, 156, 219, 0) 80.63%);
+  border: no;
+}
+.upnav .logo
+{
+    height: 90px;
+    width: 250px
+}
+.upnav .cta
+{
+    font-family: sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    color: black;
+    text-decoration: none;
+    padding: 9px 25px;
+    color: whitesmoke;
+    background-color:  blueviolet;
+    border: none;
+    cursor: pointer;
+}
+
+/* sidenavigation css */
+
+.sidenav{
+    position: fixed;
+    width: 250px;
+    height: 100%;
+    left: 0;
+    background: linear-gradient(180deg, #2D9CDB 0%, #56CCF2 100%);
+}
+.sidebar .text
+{
+color: black;
+font-size: 25px;
+font-weight: 600;
+line-height: 65px;
+text-align: center;
+letter-spacing: 1px;
+}
+
+.sidebar .sidelist{
+
+    height: 100%;
+    width: 100%
+    list-style : none;
+}
+.sidebar .sidelist li{
+    line-height: 60px;
+    border-top: 1px solid  linear-gradient(180deg, #2D9CDB 0%, #56CCF2 100%);
+}
+
+.sidebar .sidelist li a{
+  position: relative;
+  color: black;
+  text-decoration: none;
+  font-size: 18px;
+  padding-left: 40px;
+  font-weight: 500;
+  display: block;
+  width: 100%;
+  border-left: 3px solid transparent;
+}
+
+.sidebar .sidelist li a:hover{
+  color: Cornsilk;
+  background: #1e1e1e;
+  border-left-color: #007FFF;
+}
+
+.sidebar .sidelist li.curr a{
+  color: Cornsilk;
+  background: #1e1e1e;
+  border-left-color: #007FFF;
+}
+
+/* footer css */
+
+footer{
+    position: fixed;
+  left: 0;
+  bottom: 0;
+  height: 30px;
+  width: 100%;
+  text-align: center;
+    background-color: #56CCF2;
+}
+footer p{
+    text-align: center;
+}
+

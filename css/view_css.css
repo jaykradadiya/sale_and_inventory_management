@@ -1,0 +1,51 @@
+
+
+#masterTable
+{
+    padding-left: 250px;
+}
+input[type=text],input[type=password],input[type=email],input[type=date],input[type=number]
+{
+    font-size: 15px;
+    color: #333;
+    width: 100%;
+    padding: 5 5px;
+    height: 40px;
+   border-width: 1px;
+}
+select {
+    width: 100%;
+    padding: 5 5px;
+    height: 40px;
+  }
+
+#delete,#edit,#stoke,#view,#search,#back,#add
+{
+    display: inline-block;
+    justify-content: space-between;
+    align-items: center;
+    border: none;
+    width: 125px;
+    color: white; 
+    padding: 14px 28px; 
+    cursor: pointer;
+}
+
+#search{   background-color: #2196F3; }
+#search:hover{background: #0b7dda;}
+
+#back{   background-color:DarkOrange; }
+#back:hover{background: rgb(255, 150, 21);}
+
+
+#stoke {background-color: #4CAF50;} Green
+#stoke:hover {background-color: #46a049;}
+
+#edit{background-color: #2196F3;} Blue
+#edit:hover {background: #0b7dda;}
+
+#delete {background-color: #fd1201;} Red
+#delete:hover {background: #da190b;}
+
+#add{   background-color: rgb(255, 68, 0); }
+#add:hover{background: rgb(221, 80, 29);} 
