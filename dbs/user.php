@@ -44,7 +44,7 @@ class user
     private function checkUsername($username)
     {
         $sql="SELECT * FROM emp WHERE empUsername='$username'";
-        echo $sql;
+        // echo $sql;
         $res=mysqli_query($this->con,$sql) or die(mysqli_error());
         if(!$res)
         {
@@ -73,7 +73,7 @@ class user
                 $inres=mysqli_query($this->con,$sql) or die(mysqli_error());
                 if($inres ==1)
                 {
-                    header("location:../php_new/view_employee.php");
+                    return "sucess";
                 }
                 else
                 {
@@ -87,6 +87,42 @@ class user
         else{
             return "Email_already_registed";
         }
+    }
+    public function getmemberdata($id)
+    {
+        $sql="SELECT * FROM emp WHERE empID=$id";
+        // echo $sql;
+        $inres=mysqli_query($this->con,$sql) or die(mysqli_error());
+        if(mysqli_num_rows($inres)>0)
+        {
+            $rows= array();
+
+            while($row =mysqli_fetch_array($inres))
+            {
+                $rows[]=$row;
+            }
+            return $rows;
+        }
+        else
+        {
+            return "Some_error";
+        }
+
+    }
+    public function update_member($id,$password,$memberType)
+    {
+        $sql="UPDATE emp SET empPassword='$password',empType=$memberType WHERE empID=$id";
+        // echo $sql;
+        $inres=mysqli_query($this->con,$sql) or die(mysqli_error());
+        if($inres ==1)
+        {
+            return "Sucess";
+        }
+        else
+        {
+            return "Some_error";
+        }
+
     }
 
 public function userLogin($email,$password)
@@ -118,7 +154,7 @@ public function userLogin($email,$password)
 public function getEmpdata()
 {
     $sql="SELECT * FROM emp ";
-    echo $sql;
+    // echo $sql;
     $inres=mysqli_query($this->con,$sql) or die(mysqli_error());
     if(mysqli_num_rows($inres)>0)
     {
@@ -137,37 +173,51 @@ public function getEmpdata()
 
 }
 
+
+public function deleteMember($id)
+{
+    $sql="DELETE FROM emp WHERE empID=$id ";
+    echo $sql;
+    $inres=mysqli_query($this->con,$sql) or die(mysqli_error());
+    if(mysqli_num_rows($inres)==0)
+    {
+        return "sucess";
+    }
+    else
+    {
+        return "Some_error";
+    }
+
 }
 
-if(isset($_POST['addEmp'])=="add")
-{
-    echo "<pre>";
-    print_r($_POST);
-    
-$O = new user();
-echo $O->create_member($_POST["employee_email"],$_POST['employee_username'],$_POST["emp_password"],$_POST['employee_type']);
 }
-if(isset($_POST['loginbtn'])=="login")
+
+
+if(isset($_POST['addEmp'])=="add")
 {
     // echo "<pre>";
     // print_r($_POST);
     
 $O = new user();
+echo $O->create_member($_POST["employee_email"],$_POST['employee_username'],$_POST["emp_password"],$_POST['employee_type']);
+header("location:../sale_and_inventory_management/view_employee.php");
+}
+if(isset($_POST['loginbtn'])=="login")
+{
+    echo "<pre>";
+    print_r($_POST);
+    
+$O = new user();
 echo $O->userLogin($_POST["loginMail"],$_POST["loginPassword"]);
+ header("location:../sale_and_inventory_management/navigation.php");
 }
 
 // if($page=='login')
 // {
 //     if(isset($_SESSION["empEmail"]))
 //     {
-//         header("location:view_orders.php");
+//         header("location:navigation.php");
 //     }
 // }
-// else
-// {
-//     if(!isset($_SESSION["empEmail"]))
-//     {
-//         header("location:login_page.php");
-//     }
-// }
+
 ?>

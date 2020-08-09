@@ -1,11 +1,11 @@
 <?php
-// include_once("header.html");
+
 $Page='Category';
-include_once("navigation.php");
 
 include_once("dbs/category.php");
-$O = new category();
-$row = $O->getcategorydata();
+include_once("navigation.php");
+$category = new category();
+$row = $category->getcategorydata();
 if(isset($_POST["search"]))
 {
     // header("location:add_employee.php");
@@ -23,7 +23,11 @@ if(isset($_POST["edit"]))
 }
 if(isset($_POST["delete"]))
 {
-    // header("location:add_employee.php");
+    // echo "<pre>";
+    // print_r($_POST);
+    echo $category->deleteCategory($_POST['delete']);
+    header("location:view_category.php");
+
 }
 
 ?>
@@ -70,8 +74,8 @@ if(isset($_POST["delete"]))
                     <td>&nbsp;&nbsp;<?php echo $key[2]?></td>
                     <td>
                         <!-- <a href="edit_employee.php"><button id="edit">edit</button></a> -->
-                        <button name="edit" id="edit" value="<?php echo $key[0]?>">edit</button>&nbsp;
-                        <button name="delete" id="delete" value="<?php echo $key[0]?>">delete</button>&nbsp;
+                        <button name="edit" id="edit" value="<?php echo $key[0];?>">edit</button>&nbsp;
+                        <button name="delete" id="delete" value="<?php echo $key[0];?>">delete</button>&nbsp;
                         <!-- <a href="#"><button id="delete">delete</button></a></td> -->
                         </form>
                 </tr>

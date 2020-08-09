@@ -2,12 +2,17 @@
 // include_once("header.html");
 $Page='Product';
 include_once("navigation.php");
+include_once("dbs/product.php");
+$product= new product();
+$row= $product->getProductdata();
+
 if(isset($_POST["search"]))
 {
     // header("location:add_product.php");
 }
 if(isset($_POST["stoke"]))
 {
+    $_SESSION['stoke']=$_POST['stoke'];
     header("location:stoke_in_product.php");
 }
 
@@ -17,11 +22,13 @@ if(isset($_POST["add"]))
 }
 if(isset($_POST["edit"]))
 {
+    $_SESSION['edit']=$_POST['edit'];
     header("location:edit_product.php");
 }
 if(isset($_POST["delete"]))
 {
-    // header("location:add_employee.php");
+    echo $category->deleteCategory($_POST['delete']);
+    header("location:view_category.php");
 }
 
 ?>
@@ -56,24 +63,33 @@ if(isset($_POST["delete"]))
                     <th>Product Name</th>
                     <th>Product category</th>
                     <th>Product Price</th>
-                    <th>Product Supplier</th>
                     <th>Product description</th>
                     <th>Product stoke</th>
                     <th>action</th>
                 </tr>
+                <?php
+                    foreach ($row as $key) {
+                ?>
+                
                 <tr>
-                    <td>1</td>
-                    <td>name</td>
-                    <td>category</td>
-                    <td>price</td>
-                    <td>Supplier</td>
-                    <td>description</td>
-                    <td>stoke</td>
+                <form method="post">
+                    <td>&nbsp;&nbsp;<?php echo $key[0]?></td>
+                    <td>&nbsp;&nbsp;<?php echo $key[1]?></td>
+                    <td>&nbsp;&nbsp;<?php echo $key[2]?></td>
+                    <td>&nbsp;&nbsp;<?php echo $key[3]?></td>
+                    <td>&nbsp;&nbsp;<?php echo $key[4]?></td>
+                    <td>&nbsp;&nbsp;<?php echo $key[5]?></td>
                     <td>
-                        <button id="stoke" name="stoke" >stoke in</button>&nbsp;
-                        <button name="edit" id="edit">edit</button>&nbsp;
-                        <button name="delete" id="delete">delete</button></td>
+                        <!-- <a href="edit_employee.php"><button id="edit">edit</button></a> -->
+                        <button id="stoke" name="stoke"  value="<?php echo $key[0];?>" >stoke in</button>&nbsp;
+                        <button name="edit" id="edit" value="<?php echo $key[0];?>">edit</button>&nbsp;
+                        <button name="delete" id="delete" value="<?php echo $key[0];?>">delete</button>&nbsp;
+                        <!-- <a href="#"><button id="delete">delete</button></a></td> -->
+                        </form>
                 </tr>
+                
+                <?php    }
+                ?>
             </table>
         </tr>
     </table>

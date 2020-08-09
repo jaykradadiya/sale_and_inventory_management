@@ -13,10 +13,10 @@ else
 {
     header("location:view_category.php");
 }
-echo "<pre>";
-print_r($row);
+// echo "<pre>";
+// print_r($row);
 
-if(isset($_POST["update"]))
+if(isset($_POST["updateCategory"]))
 {
    echo  $cate->update_category($_POST['categoryid'],$_POST['categoryname'],$_POST['productdescription']);
     unset($_SESSION['edit']);
@@ -25,11 +25,7 @@ if(isset($_POST["update"]))
 
 if(isset($_POST["back"]))
 {
-    echo "<pre>";
-print_r($_POST);
-
-    echo  $cate->update_category($_POST['categoryid'],$_POST['categoryname'],$_POST['productdescription']);
-    unset($_SESSION['edit']);
+    
     header("location:view_category.php");
 }
 ?>

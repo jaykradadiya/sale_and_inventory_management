@@ -1,5 +1,8 @@
 <?php
-session_start();
+if(!isset($_SESSION["empEmail"]))
+{
+    session_start();
+}
 define("host","localhost");
 define("user","root");
 define("password","");

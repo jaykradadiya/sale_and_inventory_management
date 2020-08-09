@@ -51,7 +51,7 @@ class category
                 $inres=mysqli_query($this->con,$sql) or die(mysqli_error());
                 if($inres ==1)
                 {
-                    header("location:../php_new/view_category.php");
+                    return "sucess";
                 }
                 else
                 {
@@ -66,24 +66,18 @@ class category
 
     public function update_category($id,$pname,$dis)
     {
-        //  if($this->checkName($pname)==1)
-        //     {
-                $sql="UPDATE `category` SET `category_name`='$pname',`Category_desciption`='$dis' WHERE `category_id`='$id'";
-                echo $sql;
-                $inres=mysqli_query($this->con,$sql) or die(mysqli_error());
-                if($inres ==1)
-                {
-                    return "Sucess";
-                }
-                else
-                {
-                    return "Some_error";
-                }
-            // }
-            // else{
-            //     return "Category_name_not_registed";
-            // }
-        
+        $sql="UPDATE `category` SET `category_name`='$pname',`Category_desciption`='$dis' WHERE `category_id`='$id'";
+        echo $sql;
+        $inres=mysqli_query($this->con,$sql) or die(mysqli_error());
+        if($inres ==1)
+        {
+            return "Sucess";
+        }
+        else
+        {
+            return "Some_error";
+        }
+
     }
 
 public function getCategorydata()
@@ -130,12 +124,28 @@ public function getCategorybyid($id)
 
 }
 
+public function deleteCategory($id)
+{
+    $sql="DELETE FROM category WHERE category_id=$id ";
+    echo $sql;
+    $inres=mysqli_query($this->con,$sql) or die(mysqli_error());
+    if(mysqli_num_rows($inres)==0)
+    {
+        return "sucess";
+    }
+    else
+    {
+        return "Some_error";
+    }
+
+}
+
 }
 
 if(isset($_POST['addCategory'])=="add")
 {
-    echo "<pre>";
-    print_r($_POST);
+    // echo "<pre>";
+    // print_r($_POST);
     
 $O = new category();
 echo $O->create_category($_POST["categoryname"],$_POST['productdescription']);
@@ -149,18 +159,9 @@ echo $O->create_category($_POST["categoryname"],$_POST['productdescription']);
 // echo $O->userLogin($_POST["loginMail"],$_POST["loginPassword"]);
 // }
 
-// if($page=='login')
-// {
-//     if(isset($_SESSION["empEmail"]))
-//     {
-//         header("location:view_orders.php");
-//     }
-// }
-// else
-// {
-//     if(!isset($_SESSION["empEmail"]))
-//     {
-//         header("location:login_page.php");
-//     }
-// }
+    // if(!isset($_SESSION["empEmail"]))
+    // {
+    //     header("location:login_page.php");
+    // }
+
 ?>

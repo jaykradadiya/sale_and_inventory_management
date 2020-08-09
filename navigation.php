@@ -1,3 +1,16 @@
+<?php
+if(!isset($_SESSION["empEmail"]))
+{
+    session_start();
+    if(!isset($_SESSION["empEmail"]))
+    {
+        header("location:login_page.php");
+    }
+    
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,11 +25,10 @@
         <img src="pic/logo-removebg.png" alt="logo" class="logo">
         <a href="#"><button class="cta">logout</button></a>
     </header>
-
     <header class="sidenav">
         <nav class="sidebar">
             <div class="text">
-                side menu
+                <?php  echo $_SESSION["empEmail"];?>
             </div>
             <ul class="sidelist">
                 <li class="sidelistli list1 <?php if($Page=='Product'){echo 'curr';}?>">

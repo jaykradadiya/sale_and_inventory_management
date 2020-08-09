@@ -2,6 +2,7 @@
 // include_once("header.html");
 $Page='Product';
 include_once("navigation.php");
+include_once("dbs/product.php");
 
 if(isset($_POST["back"]))
 {
@@ -48,6 +49,11 @@ if(isset($_POST["back"]))
                 <td>product price</td>
                 <td><input type="text" name="productprice" id="productprice"></td>
                 <td><span id="p_price_err"></span></td>
+            </tr>
+            <tr>
+                <td>product discription</td>
+                <td><input type="text" name="productdiscription" id="productdiscription"></td>
+                <td><span id="p_dis_err"></span></td>
             </tr>
             <!-- <tr>
                 <td>product supplier</td>

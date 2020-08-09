@@ -3,8 +3,8 @@
 $Page='Emp';
 include_once("navigation.php");
 include_once("dbs/user.php");
-$O = new user();
-$row = $O->getEmpdata();
+$emp = new user();
+$row = $emp->getEmpdata();
 // echo "<pre>";
 // print_r($row);
 
@@ -19,11 +19,16 @@ if(isset($_POST["add"]))
 }
 if(isset($_POST["edit"]))
 {
+    $_SESSION['edit']=$_POST['edit'];
+//     echo "<pre>";
+// print_r($_POST);
+
     header("location:edit_employee.php");
 }
 if(isset($_POST["delete"]))
 {
-    // header("location:add_employee.php");
+    echo $category->deleteMember($_POST['delete']);
+    header("location:view_employee.php");
 }
 ?>
 <!DOCTYPE html>
@@ -71,8 +76,8 @@ if(isset($_POST["delete"]))
                     <td>&nbsp;&nbsp;<?php echo $key[4]?></td>
                     <td>
                         <!-- <a href="edit_employee.php"><button id="edit">edit</button></a> -->
-                        <button name="edit" id="edit">edit</button>&nbsp;
-                        <button name="delete" id="delete">delete</button>&nbsp;
+                        <button name="edit" id="edit" value="<?php echo $key[0];?>">edit</button>&nbsp;
+                        <button name="delete" id="delete" value="<?php echo $key[0];?>">delete</button>&nbsp;
                         <!-- <a href="#"><button id="delete">delete</button></a></td> -->
                         </form>
                 </tr>

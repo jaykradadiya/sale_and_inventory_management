@@ -3,6 +3,11 @@
 // print_r($_POST);
 $page='login';
 include_once("dbs/user.php");
+
+if(isset($_SESSION["empEmail"]))
+    {
+        header("location:navigation.php");
+    }
 ?>
 
 <!DOCTYPE html>
