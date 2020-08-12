@@ -54,7 +54,8 @@ if(!isset($_SESSION["empEmail"]))
                     <a href="view_employee.php" class="list4">Employees</a>
                 </li>
                 <?php 
-                }?>
+                }
+                ?>
             </ul>
         </nav>
     </header>
