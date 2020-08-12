@@ -19,7 +19,13 @@ select {
     height: 40px;
   }
 
-#delete,#edit,#stoke,#view,#search,#back,#add
+span#error
+{
+    color: red;
+    font-size: 20px;
+}
+
+#delete,#edit,#stoke,#view,#search,#back,#add,#addorder
 {
     display: inline-block;
     justify-content: space-between;
@@ -38,14 +44,21 @@ select {
 #back:hover{background: rgb(255, 150, 21);}
 
 
-#stoke {background-color: #4CAF50;} Green
+#stoke {background-color: #4CAF50;} 
 #stoke:hover {background-color: #46a049;}
 
-#edit{background-color: #2196F3;} Blue
+#view {background-color: #4CAF50;} 
+#view:hover {background-color: #46a049;}
+
+#edit{background-color: #2196F3;} 
 #edit:hover {background: #0b7dda;}
 
-#delete {background-color: #fd1201;} Red
+#delete {background-color: #fd1201;} 
 #delete:hover {background: #da190b;}
 
 #add{   background-color: rgb(255, 68, 0); }
 #add:hover{background: rgb(221, 80, 29);} 
+
+#addorder{background-color: rgb(255, 68, 0); }
+#addorder:hover{background: rgb(221, 80, 29);} 
+

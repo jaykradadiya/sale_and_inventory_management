@@ -2,9 +2,15 @@
 // include_once("header.html");
 $Page='Order_view';
 include_once("navigation.php");
-if(isset($_POST("back")))
+include_once("dbs/order.php");
+$data=new order();
+if(isset($_POST["back"]))
 {
     header("location:view_orders.php");
+}
+if(isset($_SESSION["view"]))
+{
+    $rows=$data->getbillItems($_SESSION['view']);
 }
 ?>
 <!DOCTYPE html>
@@ -27,23 +33,38 @@ if(isset($_POST("back")))
             <table border="1">
                 <tr>
                     <th>product ID</th>
-                    <th>product name</th>
                     <th>product price</th>
                     <th>quanitity</th>
                     <th>Price</th>
                 </tr>
+                <?php
+                if($rows!="Some_error")
+                {
+                  
+                    foreach ($rows as $key) {
+                ?>
+                
                 <tr>
-                    <td>1</td>
-                    <td>name</td>
-                    <td>100</td>
-                    <td>2</td>
-                    <td>200</td>                    
+                    <td>&nbsp;&nbsp;<?php echo $key[0];?></td>
+                    <td>&nbsp;&nbsp;<?php echo $key[1];?></td>
+                    <td>&nbsp;&nbsp;<?php echo $key[2];?></td>
+                    <td>&nbsp;&nbsp;<?php echo $key[3];?></td>
+                    
                 </tr>
-            </table>
-        </tr>
-        <tr>
-            <td> <button id="back" name="back" value="back">back</button></td>
-        </tr>
+                
+                <?php    }
+                 }
+                 else
+                 {?>
+                     <span id="error">no <?php echo "NO PRODUCT INSERTED";?></span>
+                 <?php 
+                 }
+                ?>
+                <tr>
+                <td>
+                    <button name="back" id="back"> back</button>
+                    </td>
+                </tr>
     </table>
     </form>
 </div>

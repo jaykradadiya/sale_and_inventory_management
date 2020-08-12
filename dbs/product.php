@@ -101,7 +101,7 @@ class product
 public function getProductdata()
 {
     $sql="SELECT * FROM `product`";
-    echo $sql;
+    // echo $sql;
     $inres=mysqli_query($this->con,$sql) or die(mysqli_error());
     if(mysqli_num_rows($inres)>0)
     {
@@ -123,7 +123,7 @@ public function getProductdata()
 public function getProductdatabyid($id)
 {
     $sql="SELECT * FROM product WHERE  `product_id`=$id ";
-    echo $sql;
+    // echo $sql;
     $inres=mysqli_query($this->con,$sql) or die(mysqli_error());
     if(mysqli_num_rows($inres)>0)
     {
@@ -134,6 +134,21 @@ public function getProductdatabyid($id)
             $rows[]=$row;
         }
         return $rows;
+    }
+    else
+    {
+        return "Some_error";
+    }
+
+}
+public function deleteProduct($id)
+{
+    $sql="DELETE FROM `product` WHERE `product_id`=$id ";
+    echo $sql;
+    $inres=mysqli_query($this->con,$sql) or die(mysqli_error());
+    if(mysqli_num_rows($inres)==0)
+    {
+        return "sucess";
     }
     else
     {
@@ -152,17 +167,4 @@ if(isset($_POST['addProduct'])=="add")
 $O = new product();
 echo $O->create_product($_POST["productname"],$_POST['productcategory'],$_POST["productprice"],$_POST["productdiscription"],$_POST['productstoke']);
 }
-// if(isset($_POST['loginbtn'])=="login")
-// {
-//     // echo "<pre>";
-//     // print_r($_POST);
-    
-// $O = new user();
-// echo $O->userLogin($_POST["loginMail"],$_POST["loginPassword"]);
-// }
-
-// if(!isset($_SESSION["empEmail"]))
-// {
-//     header("location:login_page.php");
-// }
 ?>

@@ -64,6 +64,9 @@ if(isset($_POST["delete"]))
                     <th>action</th>
                 </tr>
                 <?php
+                if($row!="Some_error")
+                {
+                  
                     foreach ($row as $key) {
                 ?>
                 
@@ -81,6 +84,13 @@ if(isset($_POST["delete"]))
                 </tr>
                 
                 <?php    }
+                }
+                else
+                {?>
+                    <span id="error">no <?php echo "NO PRODUCT INSERTED";?></span>
+                <?php 
+                }
+                
                 ?>
             </table>
         </tr>

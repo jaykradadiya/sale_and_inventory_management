@@ -3,7 +3,9 @@
 $Page='Product';
 include_once("navigation.php");
 include_once("dbs/product.php");
-
+include_once("dbs/category.php");
+$category =new category();
+$cat=$category->getCategorydata();
 if(isset($_POST["back"]))
 {
     header("location:view_product.php");
@@ -35,9 +37,14 @@ if(isset($_POST["back"]))
                 <td>
                     <div class="custom-select">
                     <select name="productcategory" id="productcategory" >
-                       <option value="1" selected><div class="select-selected"> leptop</div> </option>
-                       <option value="2">mobile</option>
-                       <option value="3">cloths</option>
+                    <?php
+                    foreach ($cat as $key) {
+                        ?>
+                           <option value="<?php echo $key[0];?>"><?php echo $key[1];?></option>
+                        <?php
+                    }
+                    ?>
+                      
                    </select>
                     </div>
                    

@@ -1,6 +1,6 @@
 <?php
 
-include("database.php");
+include_once("database.php");
 class category
 {
     private $con;
@@ -23,7 +23,7 @@ class category
         $db= new database();
         $this->con=$db->con();
         $sql="SELECT * FROM `category` WHERE `category_name`='$name'";
-        echo $sql;
+        // echo $sql;
         $res=mysqli_query($this->con,$sql) or die(mysqli_error());
         if(!$res)
         {
@@ -47,7 +47,7 @@ class category
          if($this->checkName($pname)==1)
             {
                 $sql="INSERT INTO `category`(`category_id`, `category_name`, `Category_desciption`) VALUES (NULL,'$pname','$dis')";
-                echo $sql;
+                // echo $sql;
                 $inres=mysqli_query($this->con,$sql) or die(mysqli_error());
                 if($inres ==1)
                 {
@@ -67,7 +67,7 @@ class category
     public function update_category($id,$pname,$dis)
     {
         $sql="UPDATE `category` SET `category_name`='$pname',`Category_desciption`='$dis' WHERE `category_id`='$id'";
-        echo $sql;
+        // echo $sql;
         $inres=mysqli_query($this->con,$sql) or die(mysqli_error());
         if($inres ==1)
         {
@@ -83,7 +83,7 @@ class category
 public function getCategorydata()
 {
     $sql="SELECT * FROM `category`";
-    echo $sql;
+    // echo $sql;
     $inres=mysqli_query($this->con,$sql) or die(mysqli_error());
     if(mysqli_num_rows($inres)>0)
     {
@@ -105,7 +105,7 @@ public function getCategorydata()
 public function getCategorybyid($id)
 {
     $sql="SELECT * FROM category WHERE category_id=$id ";
-    echo $sql;
+    // echo $sql;
     $inres=mysqli_query($this->con,$sql) or die(mysqli_error());
     if(mysqli_num_rows($inres)>0)
     {
@@ -127,7 +127,7 @@ public function getCategorybyid($id)
 public function deleteCategory($id)
 {
     $sql="DELETE FROM category WHERE category_id=$id ";
-    echo $sql;
+    // echo $sql;
     $inres=mysqli_query($this->con,$sql) or die(mysqli_error());
     if(mysqli_num_rows($inres)==0)
     {
@@ -148,20 +148,11 @@ if(isset($_POST['addCategory'])=="add")
     // print_r($_POST);
     
 $O = new category();
-echo $O->create_category($_POST["categoryname"],$_POST['productdescription']);
+ $res= $O->create_category($_POST["categoryname"],$_POST['productdescription']);
+if($res == "sucess")
+{
+    header("location:view_category.php");
 }
-// if(isset($_POST['loginbtn'])=="login")
-// {
-//     // echo "<pre>";
-//     // print_r($_POST);
-    
-// $O = new user();
-// echo $O->userLogin($_POST["loginMail"],$_POST["loginPassword"]);
-// }
-
-    // if(!isset($_SESSION["empEmail"]))
-    // {
-    //     header("location:login_page.php");
-    // }
+}
 
 ?>

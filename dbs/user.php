@@ -211,13 +211,4 @@ $O = new user();
 echo $O->userLogin($_POST["loginMail"],$_POST["loginPassword"]);
  header("location:../sale_and_inventory_management/navigation.php");
 }
-
-// if($page=='login')
-// {
-//     if(isset($_SESSION["empEmail"]))
-//     {
-//         header("location:navigation.php");
-//     }
-// }
-
 ?>

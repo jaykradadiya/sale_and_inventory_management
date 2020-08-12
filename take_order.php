@@ -2,6 +2,15 @@
 // include_once("header.html");
 $Page='Order_take';
 include_once("navigation.php");
+include_once("dbs/product.php");
+$product=new product();
+
+if(isset($_POST["addorder"]))
+{
+    echo "<pre>";
+    print_r($_POST);
+}
+// $today_date=date();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,7 +26,7 @@ include_once("navigation.php");
 </head>
 <body>
     <div id="masterTable">
-        <form method="post" onsubmit="return false">
+        <form id="order_Table" onsubmit="return false">
             <table">
                 <tr>
                     <td>
@@ -29,7 +38,7 @@ include_once("navigation.php");
                     <table >
                         <tr>
                             <th>date</th>
-                            <td><input type="date" name="O_date" id="O_date"></td>
+                            <td><input type="date" name="O_date" id="O_date" value="<?php echo date('Y-m-d');?>" readonly></td>
                         </tr>
                         <tr>
                             <th>Customer Name</th>
@@ -42,49 +51,26 @@ include_once("navigation.php");
                     
                         <tr>
                             <td colspan="2">
-                            <form onsubmit="return false">
-                            <tbody class="product_buy">
+                            <tbody id="product_buy">
                                
-                                <div id="parent_order">
                                 <tr>
                                     <h1>Procuct Buy</h1>
                                 </tr>
                                     <tr>
                                         <th>Procuct id</th>
-                                        <th>product name</th>
+                                        <!-- <th>product name</th> -->
                                         <th>Price</th>
                                         <th>Quantity</th>
+                                        <th>Buy Quntity</th>
                                         <th>total</th>
                                     </tr>
-                                <div id="child_order">
-
-                                <tr id="form_product">
-                                    <td>
-                                        <select name="O_id[]" id="O_id[]">
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                        </select>
-                                    </td>
-                                    <td><input type="text" name="O_p_name[]" id="O_p_name[]"></td>
-                                    <td><input type="number" name="O_p_price[]" id="O_p_price[]"></td>
-                                    <td><input type="number" name="O_p_qty[]" id="O_p_qty[]"></td>
-                                    <td><input type="number" name="O_p_total[]" id="O_p_total[]"></td>
-                                </tr>
-                                </div>
-                                </div>
-                                
                             
                             </tbody>
                             <tr>
-                                    <td><button id="add">add</button></td>
-                                    <td><button id="delete">remove</button></td>
+                                    <td><button name="additem" value="add" id="add">add</button></td>
+                                    <td><button name="deleteitem" value="delete" id="delete">remove</button></td>
                                 </tr>
-                            </form>
                             </td>
-                        </tr>
-                        <tr>
-                            <th>Customer Mail address</th>
-                            <td><input type="email" name="O_customer_mail" id="O_customer_mail"></td>
                         </tr>
                         <tr>
                             <th>total</th>
@@ -95,11 +81,12 @@ include_once("navigation.php");
                 </tr>
                 <tr>
                         <td>
-                            <a href="#"> <button id="add">add</button></a>
+                          <button name="addorder" id="addorder" value="add">add</button>
                         </td>
                 </tr>
             </table>
         </form>
+       <!-- <a href="dbs/order.php"><button name="addorder"  value="add">add</button></a>  -->
     </div>
 </body>
 </html>
