@@ -3,10 +3,46 @@
 // print_r($_POST);
 $page='login';
 include_once("dbs/user.php");
+$error="";
+$email="";
+if(isset($_POST['loginbtn'])=="login")
+{
+    // echo "<pre>";
+    // print_r($_POST);
+    $email=$_POST["loginMail"];
+	if(empty($email))
+	{
+		$error="Email is required";
+	}
+	else
+	{
+		if(!filter_var($email,FILTER_VALIDATE_EMAIL))
+		{
+			$error="Invalid email format";
+        }
+        else
+        {
+            if(empty($_POST["loginPassword"]))
+            {
+                $error="please Enter password";
+            }
+            else
+            {$user = new user();
+        $error= $user->userLogin($_POST["loginMail"],$_POST["loginPassword"]);
+        if($error=="Sucess")
+        {header("location:". domain ."navigation.php");}
+        }
+        }
+    }
+
+// $user = new user();
+// echo $user->userLogin($_POST["loginMail"],$_POST["loginPassword"]);
+//  header("location:". domain ."navigation.php");
+}
 
 if(isset($_SESSION["empEmail"]))
     {
-        header("location:navigation.php");
+        header("location:". domain ."navigation.php");
     }
 ?>
 
@@ -31,14 +67,14 @@ if(isset($_SESSION["empEmail"]))
             <h1 class="center_text">Member Login</h1>
             <br>
             <label for="usename"><h3>email id</h3></label>
-            <input type="text" name="loginMail" id="loginMail">
+            <input type="text" name="loginMail" id="loginMail" value="<?php echo $email;?>">
             <br>
             <span id="usernameErr"></span>
             <br>
             <label for="password"><h3>Password</h3></label>
             <input type="password" name="loginPassword" id="loginPassword">
             <br>
-            <span id="passwordErr">error</span>
+            <span id="passwordErr"><?php echo $error;?></span>
             <br>
             <input type="submit" class="logbtn" value="login" name="loginbtn">
             <br>

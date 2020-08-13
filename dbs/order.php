@@ -32,9 +32,15 @@ class order
                     $qty=$pqty[$i];
                     $itotal=$ptotal[$i];
                     $sql="INSERT INTO `bill_items`(`bill_id`, `product_id`, `quantity`, `price`) VALUES ($bill_id,$id,$qty,$itotal)";
-                    echo $sql;
+                    // echo $sql;
                     $inres=mysqli_query($this->con,$sql) or die(mysqli_error());
-                    if($inres ==1)
+
+                    $sql="UPDATE `product` SET `product_stoke`=product_stoke-$qty WHERE `product_id`=$id"
+                    $inres=mysqli_query($this->con,$sql) or die(mysqli_error());
+                    
+                }
+
+                if($inres ==1)
                     {
                         return "suceess";
                     }
@@ -42,7 +48,6 @@ class order
                     {
                         return "Some_error";
                     }
-                }
             }
             else{
                 return "bill id not geted";
@@ -152,14 +157,10 @@ if(isset($_POST["O_customer_name"]))
     $O_p_price=$_POST["O_p_price"];
     $pqty=$_POST["O_p_b_qty"];
     $ptotal=$_POST["O_p_total"];
-    print_r($_POST);
-    print_r($pids);
-    print_r($pqty);
-    print_r($ptotal);
-
     $order=new order();
-    echo $order->takeorder($cname,$cemail,$pids,$pqty,$ptotal,$counter,$date,$total);
-    header("location:view_order.php");
+
+     $order->takeorder($cname,$cemail,$pids,$pqty,$ptotal,$counter,$date,$total);
+    // header("location:view_order.php");
 }
 
 ?>

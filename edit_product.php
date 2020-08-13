@@ -9,30 +9,127 @@ $category = new category();
 $catdata = $category->getcategorydata();
 $product = new product();
 
+$pname=$pcategory=$pprice=$dis=$pstoke="";
+$errorpname=$errorcategory=$errorprice=$errordis=$errorstoke="";
+
 if(isset($_SESSION['edit']))
 {
     $row = $product->getProductdatabyid($_SESSION['edit']);
 }
 else
 {
-    header("location:view_product.php");
+    header("location:". domain."view_product.php");
 }
 
 
 if(isset($_POST["updateProduct"]))
 {
-    echo "<pre>";
- print_r($_POST);
+//     echo "<pre>";
+//  print_r($_POST);
+$pname=$_POST["productname"];
+	if(empty($pname))
+	{
+		$errorpname="product name is required";
+	}
+	else
+	{
+		if(!preg_match("/^[a-zA-z\_]*$/", $pname))
+		{
+			$errorpname="Only alphabets allowed with _";
+        }
+        else
+        {
+            $i++;
+        }
+        }
+    }
 
-   echo  $product->update_product($_POST['productid'],$_POST['productname'],$_POST['productcategory'],$_POST['productprice'],$_POST['productdiscription'],$_POST['productstoke']);
-    unset($_SESSION['edit']);
-    header("location:view_product.php");
+    $dis=$_POST["productname"];
+	if(empty($dis))
+	{
+		$errordis="product name is required";
+	}
+	else
+	{
+		if(!preg_match("/^[a-zA-z\_]*$/", $dis))
+		{
+			$errordis="Only alphabets allowed with _";
+        }
+        else
+        {
+            $i++;
+        }
+        }
+    }
+
+    $pcategory=$_POST['productcategory'];
+    if(empty($pcategory))
+    {
+        $errorcategory="type not seleced";
+    }
+    else
+    {
+        if(!filter_var($pcategory,FILTER_VALIDATE_INT))
+        {
+            $errorcategory="Invalid email format";
+        }
+        else
+        {
+            $i++;
+        }   
+    }
+
+
+    $pprice=$_POST['productprice'];
+    if(empty($pprice))
+    {
+        $errorprice="type not seleced";
+    }
+    else
+    {
+        if(!filter_var($pprice,FILTER_VALIDATE_INT))
+        {
+            $errorprice="Invalid email format";
+        }
+        else
+        {
+            $i++;
+        }   
+    }
+
+    $pstoke=$_POST['productstoke'];
+    if(empty($pstoke))
+    {
+        $errorstoke="type not seleced";
+    }
+    else
+    {
+        if(!filter_var($pstoke,FILTER_VALIDATE_INT))
+        {
+            $errorstoke="Invalid email format";
+        }
+        else
+        {
+            $i++;
+        }   
+    }
+
+      if($i==5)
+      {  
+    
+      $res= $product->update_product($_POST['productid'],$pname,$pcategory,$pprice,$dis,$pstoke);
+      if($res=="Sucess")
+      {
+        unset($_SESSION['edit']);
+        header("location:". domain."view_product.php");
+        }
+      }
 }
 
 
 if(isset($_POST["back"]))
 {
-    header("location:view_product.php");
+    header("location:". domain."view_product.php");
 }
 ?>
 <!DOCTYPE html>
@@ -57,7 +154,7 @@ if(isset($_POST["back"]))
             <tr>
                 <td>product name</td>
                 <td><input type="text" name="productname" id="productname" value="<?php echo $row[0][1];?>" ></td>
-                <td><span id="p_name_err"></span></td>
+                <td><span><?php echo $errorpname;?></span></td>
             </tr>
             <tr>
                 <td>product category</td>
@@ -78,12 +175,12 @@ if(isset($_POST["back"]))
                     </div>
                    
                 </td>
-                <td><span id="p_category_err"></span></td>
+                <td><span><?php echo $errorcategory;?></span></td>
             </tr>
             <tr>
                 <td>product price</td>
                 <td><input type="text" name="productprice" id="productprice" value="<?php echo $row[0][3];?>" ></td>
-                <td><span id="p_price_err"></span></td>
+                <td><span><?php echo $errorprice;?></span></td>
             </tr>
             <!-- <tr>
                 <td>product supplier</td>
@@ -101,12 +198,12 @@ if(isset($_POST["back"]))
             <tr>
                 <td>product discription</td>
                 <td><input type="text" name="productdiscription" id="productdiscription" value="<?php echo $row[0][4];?>" ></td>
-                <td><span id="p_dis_err"></span></td>
+                <td><span><?php echo $errordis;?></span></td>
             </tr>
             <tr>
                 <td>product stoke</td>
                 <td><input type="text" name="productstoke" id="productstoke" value="<?php echo $row[0][5];?>" ></td>
-                <td><span id="p_stoke_err"></span></td>
+                <td><span><?php echo $errorstoke;?></span></td>
             </tr>
             <tr>
             <td>

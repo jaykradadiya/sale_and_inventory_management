@@ -19,7 +19,7 @@ select {
     height: 40px;
   }
 
-span#error
+span
 {
     color: red;
     font-size: 20px;

@@ -6,7 +6,7 @@ include_once("dbs/order.php");
 $data=new order();
 if(isset($_POST["back"]))
 {
-    header("location:view_orders.php");
+    header("location:". domain."view_orders.php");
 }
 if(isset($_SESSION["view"]))
 {

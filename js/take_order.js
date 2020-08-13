@@ -1,10 +1,11 @@
 $(document).ready(function()
 {
+   var domain="http://localhost/sem5/php_new/sale_and_inventory_management/";
     function additem()
     {
       $.ajax(
          {
-            url : "../sale_and_inventory_management/dbs/order.php",
+            url : domain+"dbs/order.php",
             method : "POST",
             data : {additemfun:1},
             success: function(data)
@@ -37,7 +38,7 @@ $(document).ready(function()
       console.log(q);
       $.ajax(
          {
-            url : "../sale_and_inventory_management/dbs/order.php",
+            url : domain+"dbs/order.php",
             method : "POST",
             data : {getdata:1,id:pid},
             dataType:"JSON",
@@ -90,9 +91,15 @@ $(document).ready(function()
       //  );
     $.ajax(
         {
-            url : "../sale_and_inventory_management/dbs/order.php",
+            url : domain+"dbs/order.php",
             method : "POST",
-            data :$("#order_Table").serialize()
+            data :$("#order_Table").serialize(),
+            success: function(data)
+            {
+               // console.log(data);
+               // alert(data);
+               window.location=domain+"view_orders.php";
+            }  
         }
     )
    });

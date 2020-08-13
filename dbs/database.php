@@ -7,7 +7,7 @@ define("host","localhost");
 define("user","root");
 define("password","");
 define("database_name","pos1");
-
+define("domain","http://localhost/sem5/php_new/sale_and_inventory_management/");
 class database{
     private $connection;
     private $db;
@@ -25,6 +25,11 @@ class database{
 
             }           
         }
+    }
+
+    public function __deconstruct()
+    {
+        mysqli_close($this->connection);
     }
     public function con()
     {

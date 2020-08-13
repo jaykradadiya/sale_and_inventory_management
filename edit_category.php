@@ -1,9 +1,13 @@
 <?php
 // include_once("header.html");
 $Page='Category';
-// include_once("navigation.php");
+include_once("navigation.php");
 include_once("dbs/category.php");
 $cate = new category();
+
+$cname=$errorcname="";
+$dis=$errordis="";
+$i=0;
 
 if(isset($_SESSION['edit']))
 {
@@ -11,22 +15,61 @@ if(isset($_SESSION['edit']))
 }
 else
 {
-    header("location:view_category.php");
+    header("location:". domain."view_category.php");
 }
 // echo "<pre>";
 // print_r($row);
 
-if(isset($_POST["updateCategory"]))
+if(isset($_POST['updateCategory']))
 {
-   echo  $cate->update_category($_POST['categoryid'],$_POST['categoryname'],$_POST['productdescription']);
-    unset($_SESSION['edit']);
-    header("location:view_category.php");
+    $cname=$_POST['categoryname'];
+    if(empty($cname))
+    {
+        $errorcname="category name required";
+    }
+    else
+    {
+        if(!preg_match("/^[a-zA-z]*$/",$cname))
+		{
+			$errorcname="Invalid category name";
+        }
+        else
+        {
+            $i++;
+        }   
+    }
+
+    $dis=$_POST['productdescription'];
+    if(empty($dis))
+    {
+        $errordis="discription required";
+    }
+    else
+    {
+        if(!preg_match("/^[a-zA-z]*$/", $dis))
+		{
+			$errordis="Invalid discription of category name";
+        }
+        else
+        {
+            $i++;
+        }   
+    }
+    if($i==2)
+    {
+        $res=$cate->update_category($_POST['categoryid'],$cname,$dis);
+        unset($_SESSION['edit']);
+        if($res == "sucess")
+        {
+            header("location:". domain."view_category.php");
+        }
+    }
 }
 
 if(isset($_POST["back"]))
 {
-    
-    header("location:view_category.php");
+    unset($_SESSION['edit']);
+    header("location:". domain."view_category.php");
 }
 ?>
 <!DOCTYPE html>
@@ -51,11 +94,13 @@ if(isset($_POST["back"]))
             <tr>
                 <td>category name</td>
                 <td><input type="text" name="categoryname" id="categoryname" value="<?php echo $row[0][1];?>"></td>
+                <td><span><?php echo $errorcname;?></span></td>
             </tr>
             </tr>
             <tr>
                 <td>product description</td>
                 <td><input type="text" name="productdescription" id="productdescription" value="<?php echo $row[0][2];?>"></td>
+                <td><span><?php echo $errordis;?></span></td>
             </tr>
             <tr>
             <td>

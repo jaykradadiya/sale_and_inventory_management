@@ -13,22 +13,24 @@ if(isset($_POST["search"]))
 if(isset($_POST["stoke"]))
 {
     $_SESSION['stoke']=$_POST['stoke'];
-    header("location:stoke_in_product.php");
+    header("location:". domain."stoke_in_product.php");
 }
 
 if(isset($_POST["add"]))
 {
-    header("location:add_product.php");
+    header("location:". domain."add_product.php");
 }
 if(isset($_POST["edit"]))
 {
     $_SESSION['edit']=$_POST['edit'];
-    header("location:edit_product.php");
+    header("location:". domain."edit_product.php");
 }
 if(isset($_POST["delete"]))
 {
-    echo $product->deleteProduct($_POST['delete']);
-    header("location:view_product.php");
+    $res= $product->deleteProduct($_POST['delete']);
+    if($res=="sucess")
+    {header("location:". domain."view_product.php");}
+    
 }
 
 ?>

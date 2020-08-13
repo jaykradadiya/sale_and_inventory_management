@@ -9,7 +9,7 @@ $rows=$data->getbills();
 if(isset($_POST["view"]))
 {
     $_SESSION['view']=$_POST['view'];
-    header("location:view_order_details.php");
+    header("location:". domain."view_order_details.php");
 }
 
 ?>

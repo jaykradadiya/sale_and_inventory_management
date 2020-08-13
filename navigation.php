@@ -47,14 +47,14 @@ if(!isset($_SESSION["empEmail"]))
                     <a href="take_order.php" >Take orders</a>
                 </li>
                 <?
-                if($_SESSION["empType"]==1)
-                {
+                // if($_SESSION["empType"]==1)
+                // {
                 ?>
                 <li class="sidelistli list4 <?php if($Page=='Emp'){echo 'curr';}?>">
                     <a href="view_employee.php" class="list4">Employees</a>
                 </li>
                 <?php 
-                }
+                // }
                 ?>
             </ul>
         </nav>

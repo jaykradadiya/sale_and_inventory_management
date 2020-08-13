@@ -23,14 +23,14 @@ class product
         $db= new database();
         $this->con=$db->con();
         $sql="SELECT * FROM `product` WHERE `product_name`='$name'";
-        echo $sql;
+        // echo $sql;
         $res=mysqli_query($this->con,$sql) or die(mysqli_error());
         if(!$res)
         {
-            echo "no not";
+            return "product name not found";
         }
         else{
-            echo mysqli_num_rows($res);
+            // echo mysqli_num_rows($res);
         if(mysqli_num_rows($res)==1)
         {
             return 0;//registed
@@ -47,11 +47,11 @@ class product
          if($this->checkName($pname)==1)
             {
                 $sql="INSERT INTO `product`(`product_id`, `product_name`, `product_category`, `product_price`, `product_dis`, `product_stoke`) VALUES (NULL,'$pname',$pcategory,$pprice,'$dis',$stoke)";
-                echo $sql;
+                // echo $sql;
                 $inres=mysqli_query($this->con,$sql) or die(mysqli_error());
                 if($inres ==1)
                 {
-                    header("location:../sale_and_inventory_management/view_product.php");
+                    return "Sucess";
                 }
                 else
                 {
@@ -67,7 +67,7 @@ class product
     public function update_product($id,$pname,$pcategory,$pprice,$dis,$stoke)
     {
         $sql="UPDATE `product` SET`product_name`='$pname',`product_category`=$pcategory,`product_price`=$pprice,`product_dis`='$dis',`product_stoke`=$stoke  WHERE `product_id`=$id";
-                echo $sql;
+                // echo $sql;
                 $inres=mysqli_query($this->con,$sql) or die(mysqli_error());
                 if($inres ==1)
                 {
@@ -144,7 +144,7 @@ public function getProductdatabyid($id)
 public function deleteProduct($id)
 {
     $sql="DELETE FROM `product` WHERE `product_id`=$id ";
-    echo $sql;
+    // echo $sql;
     $inres=mysqli_query($this->con,$sql) or die(mysqli_error());
     if(mysqli_num_rows($inres)==0)
     {
@@ -159,12 +159,12 @@ public function deleteProduct($id)
 
 }
 
-if(isset($_POST['addProduct'])=="add")
-{
-    echo "<pre>";
-    print_r($_POST);
+// if(isset($_POST['addProduct'])=="add")
+// {
+//     echo "<pre>";
+//     print_r($_POST);
     
-$O = new product();
-echo $O->create_product($_POST["productname"],$_POST['productcategory'],$_POST["productprice"],$_POST["productdiscription"],$_POST['productstoke']);
-}
+// $O = new product();
+// echo $O->create_product($_POST["productname"],$_POST['productcategory'],$_POST["productprice"],$_POST["productdiscription"],$_POST['productstoke']);
+// }
 ?>

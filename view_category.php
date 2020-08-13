@@ -13,21 +13,21 @@ if(isset($_POST["search"]))
 
 if(isset($_POST["add"]))
 {
-    header("location:add_category.php");
+    header("location:". domain."add_category.php");
 }
 if(isset($_POST["edit"]))
 {
     $_SESSION['edit']=$_POST['edit'];
-     header("location:edit_category.php");
+     header("location:". domain."edit_category.php");
 
 }
 if(isset($_POST["delete"]))
 {
     // echo "<pre>";
     // print_r($_POST);
-    echo $category->deleteCategory($_POST['delete']);
-    header("location:view_category.php");
-
+   $res= $category->deleteCategory($_POST['delete']);
+   if($res=="sucess") 
+   {header("location:". domain."view_category.php");} 
 }
 
 ?>

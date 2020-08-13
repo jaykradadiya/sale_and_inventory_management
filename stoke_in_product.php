@@ -15,24 +15,62 @@ if(isset($_SESSION['stoke']))
 }
 else
 {
-    header("location:view_product.php");
+    header("location:". domain."view_product.php");
 }
 
-
+$pstoke=$errorstoke="";
+$pnewstoke=$errornewstoke="";
+$i=0;
 if(isset($_POST["updatestoke"]))
 {
-    echo "<pre>";
- print_r($_POST);
+ $pstoke=$_POST['productstoke'];
+    if(empty($pstoke))
+    {
+        $errorstoke="type not seleced";
+    }
+    else
+    {
+        if(!filter_var($pstoke,FILTER_VALIDATE_INT))
+        {
+            $errorstoke="Invalid email format";
+        }
+        else
+        {
+            $i++;
+        }   
+    }
 
-   echo  $product->update_product_stoke($_POST['productid'],$_POST['productstoke']);
-    unset($_SESSION['edit']);
-    header("location:view_product.php");
+    $pnewstoke=$_POST['productnewstoke'];
+    if(empty($pstoke))
+    {
+        $errornewstoke="type not seleced";
+    }
+    else
+    {
+        if(!filter_var($pnewstoke,FILTER_VALIDATE_INT))
+        {
+            $errorstoke="Invalid email format";
+        }
+        else
+        {
+            if($i==1)
+            {    
+                $res=  $product->update_product_stoke($_POST['productid'],($pstoke+$pnewstoke));
+
+                if($res=="Sucess")
+                {
+                    unset($_SESSION['edit']);
+                    header("location:". domain."view_product.php");
+                }}
+        }   
+    }
+  
 }
 
 
 if(isset($_POST["back"]))
 {
-    header("location:view_product.php");
+    header("location:". domain."view_product.php");
 }
 ?>
 <!DOCTYPE html>
@@ -48,7 +86,7 @@ if(isset($_POST["back"]))
     <form action="" method="post">
         <table>
             <tr>
-                <h1>edit product</h1>
+                <h1>update product stoke</h1>
             </tr>
             <tr>
                 <td>product id</td>
@@ -104,9 +142,14 @@ if(isset($_POST["back"]))
                 <td><span id="p_dis_err"></span></td>
             </tr>
             <tr>
-                <td>product stoke</td>
+                <td>product available stoke</td>
                 <td><input type="text" name="productstoke" id="productstoke" value="<?php echo $row[0][5];?>" ></td>
-                <td><span id="p_stoke_err"></span></td>
+                <td><span><?php echo $errorstoke;?></span></td>
+            </tr>
+            <tr>
+                <td>product new stoke</td>
+                <td><input type="text" name="productnewstoke" id="productnewstoke" value="<?php echo $row[0][5];?>" ></td>
+                <td><span><?php echo $errornewstoke;?></span></td>
             </tr>
             <tr>
             <td>

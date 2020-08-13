@@ -3,10 +3,59 @@
 $Page='Category';
 include_once("navigation.php");
 include_once("dbs/category.php");
+$cname=$errorcname="";
+$dis=$errordis="";
+$i=0;
+if(isset($_POST['addCategory'])=="add")
+{
+    // echo "<pre>";
+    // print_r($_POST);
+    $cname=$_POST['categoryname'];
+    if(empty($cname))
+    {
+        $errorcname="category name required";
+    }
+    else
+    {
+        if(!preg_match("/^[a-zA-z]*$/", $cname))
+		{
+			$errorcname="Invalid category name";
+        }
+        else
+        {
+            $i++;
+        }   
+    }
+    $dis=$_POST['productdescription'];
+    if(empty($cname))
+    {
+        $errordis="discription required";
+    }
+    else
+    {
+        if(!preg_match("/^[a-zA-z]*$/", $dis))
+		{
+			$errordis="Invalid discription of category name";
+        }
+        else
+        {
+            $i++;
+        }   
+    }
+    if($i==2)
+    {
 
+        $categorry = new category();
+        $res= $categorry->create_category($cname,$_POST['productdescription']);
+        if($res == "sucess")
+        {
+            header("location:". domain."view_category.php");
+        }
+    }
+}
 if(isset($_POST["back"]))
 {
-    header("location:view_category.php");
+    header("location:". domain."view_category.php");
 }
 
 ?>
@@ -27,12 +76,14 @@ if(isset($_POST["back"]))
             </tr>
             <tr>
                 <td>category name</td>
-                <td><input type="text" name="categoryname" id="categoryname"></td>
+                <td><input type="text" name="categoryname" id="categoryname" value="<?php echo $cname;?>"></td>
+                <td><span><?php echo $errorcname;?></span></td>
             </tr>
             </tr>
             <tr>
                 <td>product description</td>
-                <td><input type="text" name="productdescription" id="productdescription"></td>
+                <td><input type="text" name="productdescription" id="productdescription"  value="<?php echo $dis;?>"></td>
+                <td><span><?php echo $errordis;?></span></td>
             </tr>
             <tr>
                 <td>

@@ -20,17 +20,17 @@ class category
     }
     private function checkName($name)
     {
-        $db= new database();
-        $this->con=$db->con();
+        // $db= new database();
+        // $this->con=$db->con();
         $sql="SELECT * FROM `category` WHERE `category_name`='$name'";
         // echo $sql;
         $res=mysqli_query($this->con,$sql) or die(mysqli_error());
         if(!$res)
         {
-            echo "no not";
+            return "category name not found";
         }
         else{
-            echo mysqli_num_rows($res);
+            // echo mysqli_num_rows($res);
         if(mysqli_num_rows($res)==1)
         {
             return 0;//registed
@@ -142,17 +142,17 @@ public function deleteCategory($id)
 
 }
 
-if(isset($_POST['addCategory'])=="add")
-{
-    // echo "<pre>";
-    // print_r($_POST);
+// if(isset($_POST['addCategory'])=="add")
+// {
+//     // echo "<pre>";
+//     // print_r($_POST);
     
-$O = new category();
- $res= $O->create_category($_POST["categoryname"],$_POST['productdescription']);
-if($res == "sucess")
-{
-    header("location:view_category.php");
-}
-}
+// $O = new category();
+//  $res= $O->create_category($_POST["categoryname"],$_POST['productdescription']);
+// if($res == "sucess")
+// {
+//     header("location:view_category.php");
+// }
+// }
 
 ?>

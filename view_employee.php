@@ -10,12 +10,12 @@ $row = $emp->getEmpdata();
 
 if(isset($_POST["search"]))
 {
-    header("location:add_employee.php");
+    header("location:". domain ."add_employee.php");
 }
 
 if(isset($_POST["add"]))
 {
-    header("location:add_employee.php");
+    header("location:". domain ."add_employee.php");
 }
 if(isset($_POST["edit"]))
 {
@@ -23,12 +23,15 @@ if(isset($_POST["edit"]))
 //     echo "<pre>";
 // print_r($_POST);
 
-    header("location:edit_employee.php");
+    header("location:". domain ."edit_employee.php");
 }
 if(isset($_POST["delete"]))
 {
-    echo $category->deleteMember($_POST['delete']);
-    header("location:view_employee.php");
+    $res= $category->deleteMember($_POST['delete']);
+    if($res=="sucess")
+    {
+    header("location:". domain ."view_employee.php");
+    }
 }
 ?>
 <!DOCTYPE html>

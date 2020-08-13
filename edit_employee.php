@@ -5,6 +5,7 @@ include_once("navigation.php");
 include_once("dbs/user.php");
 $member=new user();
 
+$password=$errorPass="";
 if(isset($_SESSION['edit']))
 {
     $row = $member->getmemberdata($_SESSION['edit']);
@@ -15,13 +16,38 @@ else
 }
 if(isset($_POST["updateEmp"]))
 {
-   echo  $member->update_member($_POST['employee_id'],$_POST['emo_password'],$_POST['employee_type']);
-    unset($_SESSION['edit']);
-    header("location:view_employee.php");
+    $id=$_POST['employee_id'];
+    $type=$_POST['employee_type'];
+    $password=$_POST["emp_password"];
+	if(empty($password))
+	{
+		$errorPass="password is required";
+	}
+	else
+	{
+        if(strlen($password)>5)
+        {
+		if(!preg_match("/^(?=\S*[A-Za-z])(?=\S*[^\w\s])\S{6,}$/", $password))
+		{
+			$errorPass="password should be contain capital,small and special character";
+        }
+        else
+        {
+            $member->update_member($id,$password,$type);
+            unset($_SESSION['edit']);
+            header("location:". domain."view_employee.php");
+        }
+        }
+        else
+        {
+            $errorPass="password should be contain 6 character";
+        }
+    }
+    
 }
 if(isset($_POST["back"]))
 {
-    header("location:view_employee.php");
+    header("location:". domain."view_employee.php");
 }
 ?>
 <!DOCTYPE html>
@@ -61,12 +87,12 @@ if(isset($_POST["back"]))
                        <!-- <option value="3">biller</option> -->
                    </select>
                     </div>
-                   
                 </td>
             </tr>
             <tr>
                 <td>Password</td>
-                <td><input type="password" name="emo_password" id="emp_password" value="<?php echo $row[0][3];?>" ></td>
+                <td><input type="password" name="emp_password" id="emp_password" value="<?php echo $row[0][3];?>" ></td>
+                <td><span><?php echo $errorPass;?></span></td>
             </tr>
             <tr>
                 <td>
