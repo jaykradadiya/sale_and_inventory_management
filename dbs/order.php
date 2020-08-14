@@ -35,7 +35,7 @@ class order
                     // echo $sql;
                     $inres=mysqli_query($this->con,$sql) or die(mysqli_error());
 
-                    $sql="UPDATE `product` SET `product_stoke`=product_stoke-$qty WHERE `product_id`=$id"
+                    $sql="UPDATE `product` SET `product_stoke`=product_stoke-$qty WHERE `product_id`=$id";
                     $inres=mysqli_query($this->con,$sql) or die(mysqli_error());
                     
                 }

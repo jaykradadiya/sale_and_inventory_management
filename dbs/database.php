@@ -8,6 +8,13 @@ define("user","root");
 define("password","");
 define("database_name","pos1");
 define("domain","http://localhost/sem5/php_new/sale_and_inventory_management/");
+
+// define("host","remotemysql.com");
+// define("user","TSWFNfF1kb");
+// define("password","aLlpRrD8fK");
+// define("database_name","TSWFNfF1kb");
+// define("domain","https://saleandinventory.herokuapp.com/");
+
 class database{
     private $connection;
     private $db;
