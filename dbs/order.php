@@ -14,7 +14,10 @@ class order
         $db= new database();
         $this->con=$db->con();
     }
-
+    public function __destruct()
+    {
+        mysqli_close($this->con);
+    }
     public function takeorder($cname,$cemail,$pids,$pqty,$ptotal,$counter,$date,$total)
     {
         $sql="INSERT INTO `bill`(`customerName`, `customerEmail`, `bill_counter`, `date`, `total`) VALUES ('$cname','$cemail','$counter','$date',$total)";

@@ -3,11 +3,12 @@
 include("database.php");
 class user
 {
+    // $db=new database();
     private $con;
     public function __construct()
     {
+        $db=new database();
        
-        $db= new database();
         $this->con=$db->con();
         // if( $this->con)
         // {
@@ -17,6 +18,10 @@ class user
         // {
         //     echo "not connected";
         // }
+    }
+    public function __destruct()
+    {
+        mysqli_close($this->con);
     }
     private function checkEmail($email)
     {

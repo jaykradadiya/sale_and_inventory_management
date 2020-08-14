@@ -23,7 +23,7 @@ if(!isset($_SESSION["empEmail"]))
 
     <header class="upnav">
         <img src="pic/logo-removebg.png" alt="logo" class="logo">
-        <a href="#"><button class="cta">logout</button></a>
+        <a href="logout.php"><button class="cta">logout</button></a>
     </header>
     <header class="sidenav">
         <nav class="sidebar">

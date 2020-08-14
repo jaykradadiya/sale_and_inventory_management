@@ -34,10 +34,10 @@ class database{
         }
     }
 
-    public function __destruct()
-    {
-        mysqli_close($this->connection);
-    }
+    // public function __destruct()
+    // {
+    //     mysqli_close($this->connection);
+    // }
     public function con()
     {
         return  $this->connection;

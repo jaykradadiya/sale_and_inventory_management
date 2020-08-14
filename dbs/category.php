@@ -18,6 +18,10 @@ class category
         //     echo "not connected";
         // }
     }
+    public function __destruct()
+    {
+        mysqli_close($this->con);
+    }
     private function checkName($name)
     {
         // $db= new database();
