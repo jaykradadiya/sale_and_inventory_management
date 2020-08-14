@@ -1,7 +1,7 @@
 <?php
 // include_once("header.html");
 $Page='Order_view';
-include_once("navigation.php");
+include("navigation.php");
 include_once("dbs/order.php");
 $data=new order();
 if(isset($_POST["back"]))

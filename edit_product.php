@@ -1,7 +1,7 @@
 <?php
 // include_once("header.html");
 $Page='Product';
- include_once("navigation.php");
+ include("navigation.php");
 include_once("dbs/category.php");
 include_once("dbs/product.php");
 

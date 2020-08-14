@@ -16,8 +16,9 @@ if(!isset($_SESSION["empEmail"]))
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>pos</title>
     <link rel="stylesheet" href="css/style.css">
+    <script src="js/jquery.js"></script>
 </head>
 <body>
 
@@ -25,7 +26,8 @@ if(!isset($_SESSION["empEmail"]))
         <img src="pic/logo-removebg.png" alt="logo" class="logo">
         <a href="logout.php"><button class="cta">logout</button></a>
     </header>
-    <header class="sidenav">
+    <!-- <header class="sidenav"> -->
+        <div class="sidenav">
         <nav class="sidebar">
             <div class="text">
                 <?php  echo $_SESSION["empEmail"];?>
@@ -46,19 +48,23 @@ if(!isset($_SESSION["empEmail"]))
                 <li class="sidelistli <?php if($Page=='Order_take'){echo 'curr';}?>">
                     <a href="take_order.php" >Take orders</a>
                 </li>
-                <?
-                // if($_SESSION["empType"]==1)
-                // {
+                <?php
+                if($_SESSION["empType"]==1)
+                {
                 ?>
-                <li class="sidelistli list4 <?php if($Page=='Emp'){echo 'curr';}?>">
+
+                <li class="sidelistli list4 <?php if($Page=='Emp')echo 'curr';?>">
                     <a href="view_employee.php" class="list4">Employees</a>
                 </li>
+
                 <?php 
-                // }
+                }
                 ?>
             </ul>
         </nav>
-    </header>
+        </div>
+    <!-- </header> -->
+
     <footer class="footer">
         <p>copyright &copy</p> 
     </footer>

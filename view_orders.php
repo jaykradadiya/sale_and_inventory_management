@@ -1,7 +1,7 @@
 <?php
 // include_once("header.html");
 $Page='Order_view';
-include_once("navigation.php");
+include("navigation.php");
 include_once("dbs/order.php");
 
 $data=new order();
@@ -13,15 +13,9 @@ if(isset($_POST["view"]))
 }
 
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="css/view_css.css">
-</head>
+
 <body>
+<link rel="stylesheet" href="css/view_css.css">
     <div id="masterTable">
     <form action="" method="post">
     <table>
@@ -81,4 +75,3 @@ if(isset($_POST["view"]))
     </form>
 </div>
 </body>
-</html>

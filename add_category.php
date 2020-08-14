@@ -1,7 +1,7 @@
 <?php
 // include_once("header.html");
 $Page='Category';
-include_once("navigation.php");
+include("navigation.php");
 include_once("dbs/category.php");
 $cname=$errorcname="";
 $dis=$errordis="";

@@ -1,8 +1,8 @@
 <?php
 // include_once("header.html");
 $Page='Emp';
-include_once("navigation.php");
-include("dbs/user.php");
+include("navigation.php");
+include_once("dbs/user.php");
 $email=$password=$username=$type="";
 $errorEmail=$errorUser=$errorPass=$errorType="";
 $i=0;

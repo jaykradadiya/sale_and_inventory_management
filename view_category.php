@@ -3,7 +3,7 @@
 $Page='Category';
 
 include_once("dbs/category.php");
-include_once("navigation.php");
+include("navigation.php");
 $category = new category();
 $row = $category->getcategorydata();
 if(isset($_POST["search"]))

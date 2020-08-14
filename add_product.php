@@ -27,7 +27,7 @@ if(isset($_POST['addProduct'])=="add")
         {
             $i++;
         }
-        }
+        
     }
 
     $dis=$_POST["productname"];
@@ -45,7 +45,7 @@ if(isset($_POST['addProduct'])=="add")
         {
             $i++;
         }
-        }
+        
     }
 
     $pcategory=$_POST['productcategory'];

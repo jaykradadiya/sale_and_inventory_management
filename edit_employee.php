@@ -1,7 +1,7 @@
 <?php
 // include_once("header.html");
 $Page='Emp';
-include_once("navigation.php");
+include("navigation.php");
 include_once("dbs/user.php");
 $member=new user();
 
