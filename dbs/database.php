@@ -34,7 +34,7 @@ class database{
         }
     }
 
-    public function __deconstruct()
+    public function __destruct()
     {
         mysqli_close($this->connection);
     }
