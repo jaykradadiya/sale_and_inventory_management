@@ -1,41 +1,102 @@
 $(document).ready(function()
 {
    var domain="http://localhost/sem5/php_new/sale_and_inventory_management/";
-    function additem()
+   var productdata=[];
+   var p=[];
+   var row;
+   function getselected()
+   {
+      $('option').prop('disabled', false); //reset all the disabled options on every change event
+      $('select').each(function() { //loop through all the select elements
+        var val = this.value;
+        $('select').not(this).find('option').filter(function() { //filter option elements having value as selected option
+          return this.value === val;
+        }).prop('disabled', true); //disable those option elements
+      });
+   }
+    function additemdata()
     {
       $.ajax(
          {
             url : domain+"dbs/order.php",
             method : "POST",
             data : {additemfun:1},
+            dataType:"JSON",
             success: function(data)
             {
-               $("tbody#product_buy").append(data);
+               console.log(data);
+               console.log(data.length);
+            data.forEach((val,index)=>
+            {
+               if(data[index]!=null)
+               {
+                  for(var i in data[index])
+                  {
+                     if(i<6)
+                     p.push(data[index][i]);
+                  }
+                  p.push("0");
+                  productdata.push(p);
+                  p= [];
+               }
+            }
+
+            )
+            console.log(productdata);
+            additem();
             }    
          }     
          );
+      
     }
-    additem();
+    additemdata();
+    function additem()
+    {
+               
+         row="<tr>";
+         row+="<td>";
+         row+="<select name='O_id[]' id='O_id' class='O_id'>";
+            row+= "<option value='' selected disabled>select item</option>"
+            productdata.forEach((val,index)=>{
+                  row+="<option value='"+productdata[index][0]+"'>"+ productdata[index][1]+"</option>";
+            })
+            row+="</select>";
+         row+="</td>";
+         row+="<td><input type='number' name='O_p_price[]' id='O_p_price' readonly></td>";
+         row+="<td><input type='number' name='O_p_qty[]' id='O_p_qty' readonly></td>";
+         row+="<td><input type='number' name='O_p_b_qty[]' id='O_p_b_qty' class='O_p_b_qty' min='0'></td>";
+         row+="<td><input type='number' name='O_p_total[]' id='O_p_total' class='O_p_total' readonly></td>";
+         row+="</tr>";
+         $("tbody#product_buy").append(row);
+         // getselected();
+    }
     $("#add").click(function()
+    {
+       additem();
+    });
+    $("#delete").click(function()
+    {
+        $("tbody#product_buy").children("tr:last").remove();
+    });
+ 
+   function getselected()
    {
+      $('option').prop('disabled', false); //reset all the disabled options on every change event
+      $('select').each(function() { //loop through all the select elements
+        var val = this.value;
+        $('select').not(this).find('option').filter(function() { //filter option elements having value as selected option
+          return this.value === val;
+        }).prop('disabled', true); //disable those option elements
+      });
+   }
 
-      additem();
-    //    $("#child_order").clone().appendTo("table");
-       
-   });
-   $("#delete").click(function()
-   {
-    //    $("#child_order").clone().appendTo("table");
-       $("tbody#product_buy").children("tr:last").remove();
-   });
-
+    
    $("#product_buy").delegate(".O_id","change",function()
    {
+
       var pid = $(this).val();
       var tr =$(this).parent().parent();
-
-      var q=$("O_p_qty[pid]").val();
-      console.log(q);
+      // getselected();
       $.ajax(
          {
             url : domain+"dbs/order.php",
@@ -43,11 +104,7 @@ $(document).ready(function()
             data : {getdata:1,id:pid},
             dataType:"JSON",
             success: function(data)
-            {
-               console.table(tr);
-               console.log(data);
-               console.table(data["product_price"]);
-               console.table(data["product_stoke"]);
+            { 
                tr.find("#O_p_price").val(data["product_price"]);
                tr.find("#O_p_qty").val(data["product_stoke"]);
                tr.find("#O_p_b_qty").attr("max",data["product_stoke"]);
@@ -89,6 +146,7 @@ $(document).ready(function()
       //      function (data) {
       //          alert(data);}
       //  );
+      
     $.ajax(
         {
             url : domain+"dbs/order.php",
@@ -98,7 +156,15 @@ $(document).ready(function()
             {
                // console.log(data);
                // alert(data);
-               window.location=domain+"view_orders.php";
+               if(data=="suceess")
+               {
+                  window.location=domain+"view_orders.php"; 
+               }
+               else
+               {
+                  alert("some error");                 
+                  console.log(data);                 
+               }
             }  
         }
     )

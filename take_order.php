@@ -43,10 +43,12 @@ if(isset($_POST["addorder"]))
                         <tr>
                             <th>Customer Name</th>
                             <td><input type="text" name="O_customer_name" id="O_customer_name"></td>
+                            <td><span id="errorcname"></span></td>
                         </tr>
                         <tr>
                             <th>Customer Mail address</th>
                             <td><input type="email" name="O_customer_mail" id="O_customer_mail"></td>
+                            <td><span id="errorEmail"></span></td>
                         </tr>
                     
                         <tr>
@@ -67,6 +69,8 @@ if(isset($_POST["addorder"]))
                             
                             </tbody>
                             <tr>
+                            <td><span id="error product"></span></td></tr>
+                            <tr>
                                     <td><button name="additem" value="add" id="add">add</button></td>
                                     <td><button name="deleteitem" value="delete" id="delete">remove</button></td>
                                 </tr>
@@ -74,7 +78,8 @@ if(isset($_POST["addorder"]))
                         </tr>
                         <tr>
                             <th>total</th>
-                            <td><input type="number" name="O_totals" id="O_totals"></td>
+                            <td><input type="number" name="O_totals" id="O_totals" readonly></td>
+                            <td><span id="errorProduct"></span></td>
                         </tr>
                     </table>
                     </td>

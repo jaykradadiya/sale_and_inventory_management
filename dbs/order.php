@@ -20,6 +20,8 @@ class order
     }
     public function takeorder($cname,$cemail,$pids,$pqty,$ptotal,$counter,$date,$total)
     {
+        $sql="START TRANSACTION";
+        $inres=mysqli_query($this->con,$sql) or die(mysqli_error());
         $sql="INSERT INTO `bill`(`customerName`, `customerEmail`, `bill_counter`, `date`, `total`) VALUES ('$cname','$cemail','$counter','$date',$total)";
         echo $sql;
         $inres=mysqli_query($this->con,$sql) or die(mysqli_error());
@@ -40,11 +42,19 @@ class order
 
                     $sql="UPDATE `product` SET `product_stoke`=product_stoke-$qty WHERE `product_id`=$id";
                     $inres=mysqli_query($this->con,$sql) or die(mysqli_error());
+                    if(!$inres)
+                    {
+                        $sql="rollback";
+                        $inres=mysqli_query($this->con,$sql) or die(mysqli_error());
+                        return "some error";
+                    }
                     
                 }
 
                 if($inres ==1)
                     {
+                        $sql="commit";
+                        $inres=mysqli_query($this->con,$sql) or die(mysqli_error());
                         return "suceess";
                     }
                     else
@@ -113,31 +123,8 @@ if(isset($_POST["additemfun"]))
 {
     
     $rows=$product->getProductdata();
-    ?>
-        <tr>
-        <td>
-            <select name="O_id[]" id="O_id" class="O_id">
-            <option value="" selected disabled>select item</option>
-            <?php
-            foreach ($rows as $key) {
-                ?>
+    echo json_encode($rows);
 
-                <option value="<?php echo $key[0];?>"><?php echo $key[1];?></option>
-
-            <?php
-                }
-            ?>
-
-            </select>
-        </td>
-        <!-- <td><input type="text" name="O_p_name[]" id="O_p_name[]"></td> -->
-        <td><input type="number" name="O_p_price[]" id="O_p_price" readonly></td>
-        <td><input type="number" name="O_p_qty[]" id="O_p_qty" readonly></td>
-        <td><input type="number" name="O_p_b_qty[]" id="O_p_b_qty" class="O_p_b_qty" min="0"></td>
-        <td><input type="number" name="O_p_total[]" id="O_p_total" class="O_p_total"></td>
-    </tr>   
-    
-<?php
     exit();
 }
 
@@ -151,19 +138,112 @@ if(isset($_POST["getdata"]))
 if(isset($_POST["O_customer_name"]))
 {
     $counter=$_SESSION["empUsername"];
-
+    $errorname=$erroeEmail=$errorTotal=$errorPid=$errorPqty="";
+    $error=[];
+    $i=0;
     $cname=$_POST["O_customer_name"];
     $cemail=$_POST["O_customer_mail"];
     $date=$_POST["O_date"];
-    $total=$_POST["O_totals"];
-    $pids=$_POST["O_id"];
-    $O_p_price=$_POST["O_p_price"];
-    $pqty=$_POST["O_p_b_qty"];
-    $ptotal=$_POST["O_p_total"];
-    $order=new order();
+    
+    if(empty($cname))
+	{
+        // $errorname="product name is required";
+        $error[0]="product name is required";
+	}
+	else
+	{
+		if(!preg_match("/^[a-zA-z\_]*$/", $cname))
+		{
+            // $errorname="Only alphabets allowed with _";
+            $error[0]="Only alphabets allowed with _";
+        }
+        else
+        {
+            $i++;
+        }
+        
+    }
+    if(empty($cemail))
+    {
+        // $erroeEmail=
+        $error[1]="type not seleced";
+    }
+    else
+    {
+        if(!filter_var($cemail,FILTER_VALIDATE_INT))
+        {
+            // $erroeEmail=
+            $error[1]="Invalid email format";
+        }
+        else
+        {
+            $i++;
+        }   
+    }
 
-     $order->takeorder($cname,$cemail,$pids,$pqty,$ptotal,$counter,$date,$total);
+    $total=$_POST["O_totals"];
+    if(empty($total))
+    {
+        // $errorTotal=
+        $error[2]="total shold not be empty";
+
+    }
+    else{
+        $i++;
+    }
+    if(isset($_POST["O_id"]))
+    {
+        $pids=$_POST["O_id"];
+        foreach ($pid as $key=>$val ) {
+            if(empty($key))
+            {
+                // $errorPid=
+                $error[3]="product is empty on". $key;
+            }
+        }
+        // if($errorPid="")
+        if($error[3]="")
+        {
+            $i++;
+        }
+    }
+    else{
+        // $errorPid=
+        $error[3]="product is not selected";
+    }
+    $O_p_price=$_POST["O_p_price"];
+    if(isset($_POST["O_p_b_qty"]))
+            {    $pqty=$_POST["O_p_b_qty"];
+                foreach ($pqty as $key=>$val ) {
+                    if(empty($val))
+                    {
+                        $error[4]="product qty empty on". $key;
+                    }
+
+                }
+                if($error[4]=="")
+                {
+                    $i++;
+                }
+
+            }    
+    $ptotal=$_POST["O_p_total"];
+
+    if($i==5)
+    {
+    $order=new order();
+    $res= $order->takeorder($cname,$cemail,$pids,$pqty,$ptotal,$counter,$date,$total);
+    echo $res;
+    }
+    else{
+        // echo json_encode([$errorname,$erroeEmail,$errorTotal,$errorPid,$errorPqty]);
+        print_r($error);
+        
+        $main = array('data'=>$error); 
+        echo json_encode($main); 
+    }
     // header("location:view_order.php");
+   
 }
 
 ?>
