@@ -69,7 +69,11 @@ if(isset($_POST["addorder"]))
                             
                             </tbody>
                             <tr>
-                            <td><span id="error product"></span></td></tr>
+                            <td><span id="errorproduct"></span></td>
+                           </tr>
+                           <tr>
+                            <td><span id="errorpqty"></span></td>
+                           </tr>
                             <tr>
                                     <td><button name="additem" value="add" id="add">add</button></td>
                                     <td><button name="deleteitem" value="delete" id="delete">remove</button></td>
@@ -79,7 +83,7 @@ if(isset($_POST["addorder"]))
                         <tr>
                             <th>total</th>
                             <td><input type="number" name="O_totals" id="O_totals" readonly></td>
-                            <td><span id="errorProduct"></span></td>
+                            <td><span id="errorTotal"></span></td>
                         </tr>
                     </table>
                     </td>

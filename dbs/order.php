@@ -23,12 +23,11 @@ class order
         $sql="START TRANSACTION";
         $inres=mysqli_query($this->con,$sql) or die(mysqli_error());
         $sql="INSERT INTO `bill`(`customerName`, `customerEmail`, `bill_counter`, `date`, `total`) VALUES ('$cname','$cemail','$counter','$date',$total)";
-        echo $sql;
         $inres=mysqli_query($this->con,$sql) or die(mysqli_error());
         if($inres ==1)
         {
             $bill_id=$this->con->insert_id;
-            echo $bill_id ."  ". count($pids);
+
             if($bill_id!=NULL)
             {
                 for($i=0;$i<count($pids);$i++)
@@ -139,7 +138,6 @@ if(isset($_POST["O_customer_name"]))
 {
     $counter=$_SESSION["empUsername"];
     $errorname=$erroeEmail=$errorTotal=$errorPid=$errorPqty="";
-    $error=[];
     $i=0;
     $cname=$_POST["O_customer_name"];
     $cemail=$_POST["O_customer_mail"];
@@ -147,15 +145,13 @@ if(isset($_POST["O_customer_name"]))
     
     if(empty($cname))
 	{
-        // $errorname="product name is required";
-        $error[0]="product name is required";
+        $errorname="product name is required";
 	}
 	else
 	{
 		if(!preg_match("/^[a-zA-z\_]*$/", $cname))
 		{
-            // $errorname="Only alphabets allowed with _";
-            $error[0]="Only alphabets allowed with _";
+            $errorname="Only alphabets allowed with _";
         }
         else
         {
@@ -165,15 +161,13 @@ if(isset($_POST["O_customer_name"]))
     }
     if(empty($cemail))
     {
-        // $erroeEmail=
-        $error[1]="type not seleced";
+        $erroeEmail="please emter email address";
     }
     else
     {
-        if(!filter_var($cemail,FILTER_VALIDATE_INT))
+        if(!filter_var($cemail,FILTER_VALIDATE_EMAIL))
         {
-            // $erroeEmail=
-            $error[1]="Invalid email format";
+            $erroeEmail="Invalid email format";
         }
         else
         {
@@ -184,49 +178,50 @@ if(isset($_POST["O_customer_name"]))
     $total=$_POST["O_totals"];
     if(empty($total))
     {
-        // $errorTotal=
-        $error[2]="total shold not be empty";
+        $errorTotal="total shold not be empty";
 
     }
     else{
         $i++;
     }
+
+
     if(isset($_POST["O_id"]))
     {
         $pids=$_POST["O_id"];
-        foreach ($pid as $key=>$val ) {
-            if(empty($key))
-            {
-                // $errorPid=
-                $error[3]="product is empty on". $key;
+        $errorPid="product is empty on ";
+        foreach ($pids as $key=>$val ) {
+                if(empty($val))
+                {
+                    $errorPid= $errorPid. $key;
+                }
             }
-        }
-        // if($errorPid="")
-        if($error[3]="")
-        {
-            $i++;
-        }
+            if($errorPid=="product is empty on ")
+            {
+                $errorPid=" ";
+                $i++;
+            }
     }
     else{
-        // $errorPid=
-        $error[3]="product is not selected";
+        $errorPid="product is not selected";
     }
     $O_p_price=$_POST["O_p_price"];
     if(isset($_POST["O_p_b_qty"]))
-            {    $pqty=$_POST["O_p_b_qty"];
-                foreach ($pqty as $key=>$val ) {
-                    if(empty($val))
-                    {
-                        $error[4]="product qty empty on". $key;
-                    }
-
-                }
-                if($error[4]=="")
+    {  
+            $pqty=$_POST["O_p_b_qty"];
+            $errorPqty="product qty empty on ";
+            foreach ($pqty as $key=>$val ) {
+                if(empty($val))
                 {
-                    $i++;
+                    $errorPqty = $errorPqty . $key;
                 }
-
-            }    
+            }
+            if($errorPqty=="product qty empty on ")
+            {
+                $errorPqty=" ";
+                $i++;
+            }
+    }    
     $ptotal=$_POST["O_p_total"];
 
     if($i==5)
@@ -236,11 +231,25 @@ if(isset($_POST["O_customer_name"]))
     echo $res;
     }
     else{
-        // echo json_encode([$errorname,$erroeEmail,$errorTotal,$errorPid,$errorPqty]);
-        print_r($error);
-        
-        $main = array('data'=>$error); 
-        echo json_encode($main); 
+        ?>
+<script>
+
+var cname= "<?php echo $errorname;?>";
+var cemail= "<?php echo $erroeEmail;?>";
+var total= "<?php echo $errorTotal;?>";
+var pid= "<?php echo $errorPid;?>";
+var pqty= "<?php echo $errorPqty;?>";
+console.log(cname);
+$("#errorcname").html(cname);
+$("#errorEmail").html(cemail);
+$("#errorproduct").html(pid);
+$("#errorpqty").html(pqty);
+$("#errorTotal").html(total);
+
+</script>
+
+
+        <?php 
     }
     // header("location:view_order.php");
    

@@ -68,7 +68,7 @@ $(document).ready(function()
          row+="<td><input type='number' name='O_p_total[]' id='O_p_total' class='O_p_total' readonly></td>";
          row+="</tr>";
          $("tbody#product_buy").append(row);
-         // getselected();
+         getselected();
     }
     $("#add").click(function()
     {
@@ -78,25 +78,13 @@ $(document).ready(function()
     {
         $("tbody#product_buy").children("tr:last").remove();
     });
- 
-   function getselected()
-   {
-      $('option').prop('disabled', false); //reset all the disabled options on every change event
-      $('select').each(function() { //loop through all the select elements
-        var val = this.value;
-        $('select').not(this).find('option').filter(function() { //filter option elements having value as selected option
-          return this.value === val;
-        }).prop('disabled', true); //disable those option elements
-      });
-   }
-
     
    $("#product_buy").delegate(".O_id","change",function()
    {
 
       var pid = $(this).val();
       var tr =$(this).parent().parent();
-      // getselected();
+      getselected();
       $.ajax(
          {
             url : domain+"dbs/order.php",
@@ -139,14 +127,7 @@ $(document).ready(function()
    });
 
    $("#addorder").click(function()
-   {
-    console.log("clicked");
-      //  $.post("../sale_and_inventory_management/dbs/order.php",
-      //   {$("#order_Table").serialize()},
-      //      function (data) {
-      //          alert(data);}
-      //  );
-      
+   {  
     $.ajax(
         {
             url : domain+"dbs/order.php",
@@ -154,16 +135,13 @@ $(document).ready(function()
             data :$("#order_Table").serialize(),
             success: function(data)
             {
-               // console.log(data);
-               // alert(data);
                if(data=="suceess")
                {
                   window.location=domain+"view_orders.php"; 
                }
                else
                {
-                  alert("some error");                 
-                  console.log(data);                 
+                  $("#order_Table").append(data);             
                }
             }  
         }
