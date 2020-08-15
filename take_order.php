@@ -5,11 +5,11 @@ include("navigation.php");
 include_once("dbs/product.php");
 $product=new product();
 
-if(isset($_POST["addorder"]))
-{
-    echo "<pre>";
-    print_r($_POST);
-}
+// if(isset($_POST["addorder"]))
+// {
+//     echo "<pre>";
+//     print_r($_POST);
+// }
 // $today_date=date();
 ?>
 <!DOCTYPE html>

@@ -113,6 +113,29 @@ class user
         }
 
     }
+
+    public function getempserchdata($val)
+    {
+        $sql="SELECT * FROM `emp` WHERE CONCAT(`empID`, `empEmail`, `empUsername`, `empPassword`, `empType`) LIKE '%$val%'";
+        // echo $sql;
+        $inres=mysqli_query($this->con,$sql) or die(mysqli_error());
+        if(mysqli_num_rows($inres)>0)
+        {
+            $rows= array();
+
+            while($row =mysqli_fetch_array($inres))
+            {
+                $rows[]=$row;
+            }
+            return $rows;
+        }
+        else
+        {
+            return "Some_error";
+        }
+
+    }
+
     public function update_member($id,$password,$memberType)
     {
         $sql="UPDATE emp SET empPassword='$password',empType=$memberType WHERE empID=$id";

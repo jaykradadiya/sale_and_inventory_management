@@ -5,10 +5,15 @@ $Page='Category';
 include_once("dbs/category.php");
 include("navigation.php");
 $category = new category();
-$row = $category->getcategorydata();
 if(isset($_POST["search"]))
 {
+
+    $row = $category->getCategoryserchdata($_POST["c_search"]);
     // header("location:add_employee.php");
+}
+else
+{
+$row = $category->getcategorydata();
 }
 
 if(isset($_POST["add"]))

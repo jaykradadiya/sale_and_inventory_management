@@ -5,7 +5,15 @@ include("navigation.php");
 include_once("dbs/order.php");
 
 $data=new order();
-$rows=$data->getbills();
+
+if(isset($_POST["search"]))
+{
+    $rows=$data->getbillserchdata($_POST["p_search"]);
+}
+else
+{
+    $rows=$data->getbills();
+}
 if(isset($_POST["view"]))
 {
     $_SESSION['view']=$_POST['view'];
@@ -25,7 +33,7 @@ if(isset($_POST["view"]))
                 <input type="text" name="p_search" id="p_search">
             </td>
             <td>
-                <button name="search" id="search"> search</button>
+                <button name="search" value="search" id="search"> search</button>
             </td>
         </tr>
         <tr>

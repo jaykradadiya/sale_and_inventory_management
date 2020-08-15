@@ -94,6 +94,27 @@ class order
     }
     }
 
+    public function getbillserchdata($val)
+    {   
+        $sql="SELECT * FROM `bill` WHERE CONCAT(`bill_id`, `customerName`, `customerEmail`, `bill_counter`, `date`, `total`) LIKE '%$val%' ";
+        // echo $sql;
+        $inres=mysqli_query($this->con,$sql) or die(mysqli_error());
+        if(mysqli_num_rows($inres)>0)
+        {
+            $rows= array();
+    
+            while($row =mysqli_fetch_array($inres))
+            {
+                $rows[]=$row;
+            }
+            return $rows;
+        }
+        else
+        {
+            return "Some_error";
+        }
+    }
+
     public function getbillItems($id)
     {   
         $sql="SELECT * FROM `bill_items` WHERE `bill_id`=$id ";

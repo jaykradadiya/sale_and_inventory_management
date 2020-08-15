@@ -106,7 +106,7 @@ class product
 
 public function getProductdata()
 {
-    $sql="SELECT * FROM `product`";
+    $sql="SELECT `product_id`,`product_name`, `category_name`, `product_price`, `product_dis`, `product_stoke` FROM `product`as p,`category` as c WHERE p.product_category=c.category_id";
     // echo $sql;
     $inres=mysqli_query($this->con,$sql) or die(mysqli_error());
     if(mysqli_num_rows($inres)>0)
@@ -128,7 +128,7 @@ public function getProductdata()
 
 public function getProductdatabyid($id)
 {
-    $sql="SELECT * FROM product WHERE  `product_id`=$id ";
+    $sql="SELECT `product_id`,`product_name`, `category_name`, `product_price`, `product_dis`, `product_stoke` FROM `product`as p,`category` as c WHERE p.product_category=c.category_id AND`product_id`=$id ";
     // echo $sql;
     $inres=mysqli_query($this->con,$sql) or die(mysqli_error());
     if(mysqli_num_rows($inres)>0)
@@ -147,6 +147,29 @@ public function getProductdatabyid($id)
     }
 
 }
+
+public function getProductsearchdata($val)
+{
+    $sql="SELECT `product_id`,`product_name`, `category_name`, `product_price`, `product_dis`, `product_stoke` FROM `product`as p,`category` as c WHERE p.product_category=c.category_id AND CONCAT(`product_id`, `product_name`, `product_category`, `product_price`, `product_dis`, `product_stoke`) LIKE '%$val%'";
+    // echo $sql;
+    $inres=mysqli_query($this->con,$sql) or die(mysqli_error());
+    if(mysqli_num_rows($inres)>0)
+    {
+        $rows= array();
+
+        while($row =mysqli_fetch_array($inres))
+        {
+            $rows[]=$row;
+        }
+        return $rows;
+    }
+    else
+    {
+        return "Some_error";
+    }
+
+}
+
 public function deleteProduct($id)
 {
     $sql="DELETE FROM `product` WHERE `product_id`=$id ";

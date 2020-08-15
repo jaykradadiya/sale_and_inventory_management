@@ -105,6 +105,27 @@ public function getCategorydata()
     }
 
 }
+public function getCategoryserchdata($val)
+{
+    $sql="SELECT * FROM `category` WHERE CONCAT(`category_id`, `category_name`, `Category_desciption`) LIKE '%$val%'";
+    // echo $sql;
+    $inres=mysqli_query($this->con,$sql) or die(mysqli_error());
+    if(mysqli_num_rows($inres)>0)
+    {
+        $rows= array();
+
+        while($row =mysqli_fetch_array($inres))
+        {
+            $rows[]=$row;
+        }
+        return $rows;
+    }
+    else
+    {
+        return "Some_error";
+    }
+
+}
 
 public function getCategorybyid($id)
 {

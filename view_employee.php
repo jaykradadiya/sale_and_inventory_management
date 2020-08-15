@@ -10,7 +10,11 @@ $row = $emp->getEmpdata();
 
 if(isset($_POST["search"]))
 {
-    header("location:". domain ."add_employee.php");
+    $row = $emp->getempserchdata($_POST["e_search"]);
+}
+else
+{
+    $row = $emp->getEmpdata();   
 }
 
 if(isset($_POST["add"]))
@@ -52,7 +56,7 @@ if(isset($_POST["delete"]))
                 <input type="text" name="e_search" id="e_search">
             </td>
             <td>
-                <button name="search" id="search"> search</button>
+                <button name="search" value="search" id="search"> search</button>
             </td>
             <td>
                 <button name="add" id="add"> add</button>

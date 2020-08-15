@@ -8,7 +8,11 @@ $row= $product->getProductdata();
 
 if(isset($_POST["search"]))
 {
-    // header("location:add_product.php");
+    $row= $product->getProductsearchdata($_POST["p_search"]);
+}
+else
+{
+    $row= $product->getProductdata();
 }
 if(isset($_POST["stoke"]))
 {

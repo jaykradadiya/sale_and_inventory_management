@@ -59,7 +59,7 @@ $pname=$_POST["productname"];
         {
             $i++;
         }
-        }
+        
     }
 
     $pcategory=$_POST['productcategory'];
@@ -123,7 +123,7 @@ $pname=$_POST["productname"];
         unset($_SESSION['edit']);
         header("location:". domain."view_product.php");
         }
-      }
+      
 }
 
 
