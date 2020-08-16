@@ -148,7 +148,7 @@ if(isset($_POST["back"]))
             </tr>
             <tr>
                 <td>product new stoke</td>
-                <td><input type="text" name="productnewstoke" id="productnewstoke" value="<?php echo $row[0][5];?>" ></td>
+                <td><input type="text" name="productnewstoke" id="productnewstoke" value="0" ></td>
                 <td><span><?php echo $errornewstoke;?></span></td>
             </tr>
             <tr>

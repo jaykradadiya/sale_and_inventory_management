@@ -2,22 +2,30 @@
 
 #masterTable
 {
-    padding-left: 250px;
-    padding-bottom: 100px;
+    padding-left: 275px;
+    /* padding-bottom: 100px; */
+    color: black    ;
 }
 input[type=text],input[type=password],input[type=email],input[type=date],input[type=number]
 {
     font-size: 15px;
     color: #333;
     width: 100%;
-    padding: 5 5px;
-    height: 40px;
-   border-width: 1px;
+    margin: 0 auto;
+    font-size: medium;
+    padding: 5px 5px;
+    height: 45px;
+   border: 1px;
+   border-radius: 1px;
 }
 select {
     width: 100%;
-    padding: 5 5px;
-    height: 40px;
+    padding: 5px 5px;
+    height: 45px;
+    font-size: medium;
+    border: 1px;
+    border-radius: 1px;
+   
   }
 
 span

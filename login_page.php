@@ -5,7 +5,7 @@ $page='login';
 include_once("dbs/user.php");
 $error="";
 $email="";
-if(isset($_POST['loginbtn'])=="login")
+if(isset($_POST['loginbtn'])=="Login")
 {
     // echo "<pre>";
     // print_r($_POST);
@@ -56,27 +56,26 @@ if(isset($_SESSION["empEmail"]))
     
 </head>
 <body>
-    <header>
+    <!-- <header>
         <img src="pic/logo-removebg.png" alt="logo" class="logo">
-    </header>
+    </header> -->
     <br>
     <br>
     <form method="post" class="login_form">
         <div class="center_box">
-            <div class="center_img"><img src="pic/logo.png" alt="company logo" class="login_img"></div>
+            <div class="center_img"><img src="pic/logo-removebg.png" alt="company logo" class="login_img"></div>
             <h1 class="center_text">Member Login</h1>
             <br>
-            <label for="usename"><h3>email id</h3></label>
-            <input type="text" name="loginMail" id="loginMail" value="<?php echo $email;?>">
-            <br>
+            <label for="usename"><h3>Email id</h3></label>
+            <input type="text" name="loginMail" id="loginMail" value="<?php echo $email;?>" placeholder="Enter Email address">
             <span id="usernameErr"></span>
             <br>
             <label for="password"><h3>Password</h3></label>
-            <input type="password" name="loginPassword" id="loginPassword">
+            <input type="password" name="loginPassword" id="loginPassword" placeholder="Enter Email address">
             <br>
             <span id="passwordErr"><?php echo $error;?></span>
             <br>
-            <input type="submit" class="logbtn" value="login" name="loginbtn">
+            <input type="submit" class="logbtn" value="L background:rgba(0, 0, 0, 0.5);ogin" name="loginbtn">
             <br>
             <!-- <span class="worong_password">worong password?</span>
             <br><br> -->
