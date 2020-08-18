@@ -71,11 +71,11 @@ if(isset($_SESSION["empEmail"]))
             <span id="usernameErr"></span>
             <br>
             <label for="password"><h3>Password</h3></label>
-            <input type="password" name="loginPassword" id="loginPassword" placeholder="Enter Email address">
+            <input type="password" name="loginPassword" id="loginPassword" placeholder="Enter Password">
             <br>
             <span id="passwordErr"><?php echo $error;?></span>
             <br>
-            <input type="submit" class="logbtn" value="L background:rgba(0, 0, 0, 0.5);ogin" name="loginbtn">
+            <input type="submit" class="logbtn" value="Login" name="loginbtn">
             <br>
             <!-- <span class="worong_password">worong password?</span>
             <br><br> -->

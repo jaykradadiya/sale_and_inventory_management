@@ -4,11 +4,14 @@ $Page='Product';
 include_once("navigation.php");
 include_once("dbs/product.php");
 include_once("dbs/category.php");
+include_once("dbs/supplier.php");
 $category =new category();
 $cat=$category->getCategorydata();
+$supplier=new supplier();
+$sup=$supplier->getSupplierdata();
 
-$pname=$pcategory=$pprice=$dis=$pstoke="";
-$errorpname=$errorcategory=$errorprice=$errordis=$errorstoke="";
+$pname=$pcategory=$pprice=$dis=$pstoke=$psupplier="";
+$errorpname=$errorcategory=$errorprice=$errordis=$errorstoke=$errorsupplier="";
 
 if(isset($_POST['addProduct'])=="add")
 {
@@ -99,14 +102,34 @@ if(isset($_POST['addProduct'])=="add")
             $i++;
         }   
     }
+    $psupplier=$_POST['productsupplier'];
+    if(empty($psupplier))
+    {
+        $errorsupplier="type not seleced";
+    }
+    else
+    {
+        if(!filter_var($psupplier,FILTER_VALIDATE_INT))
+        {
+            $errorsupplier="Invalid email format";
+        }
+        else
+        {
+            $i++;
+        }   
+    }
 
-      if($i==5)
+      if($i==6)
       {  
         $product = new product();
         $res= $product->create_product($pname,$pcategory,$pprice,$_POST["productdiscription"],$_POST['productstoke']);
         if($res=="Sucess")
         {
             header("location:". domain."view_product.php");
+        }
+        else if($res == "product_name_already_registed")
+        {
+            $errorpname="product name already registed";
         }
     }
 }
@@ -140,7 +163,6 @@ if(isset($_POST["back"]))
             <tr>
                 <td>product category</td>
                 <td>
-                    <div class="custom-select">
                     <select name="productcategory" id="productcategory" >
                     <?php
                     foreach ($cat as $key) {
@@ -151,8 +173,6 @@ if(isset($_POST["back"]))
                     ?>
                       
                    </select>
-                    </div>
-                   
                 </td>
                 <td><span><?php echo $errorcategory;?></span></td>
 
@@ -169,19 +189,24 @@ if(isset($_POST["back"]))
                 <td><span><?php echo $errordis;?></span></td>
 
             </tr>
-            <!-- <tr>
+            <tr>
                 <td>product supplier</td>
                 <td>
-                    <div class="custom-select">
-                        <select name="productsupplier" id="productsupplier">
-                        <option value="1" selected>mi</option>
-                        <option value="2">olx</option>
-                        <option value="3">amazon</option>
-                    </select>
-                    </div>
-                
+                    <select name="productsupplier" id="productsupplier" >
+                    <?php
+                    foreach ($sup as $key) {
+                        ?>
+                           <option value="<?php echo $key[0];?>"><?php echo $key[1];?></option>
+                        <?php
+                    }
+                    ?>
+                      
+                   </select>
+                    
                 </td>
-            </tr> -->
+                <td><span><?php echo $errorsupplier;?></span></td>
+
+            </tr>
             <tr>
                 <td>product stoke</td>
                 <td><input type="text" name="productstoke" id="productstoke" <?php echo $pstoke;?>></td>

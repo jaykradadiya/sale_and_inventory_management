@@ -71,6 +71,7 @@ if(isset($_POST["delete"]))
                     <th>Product Price</th>
                     <th>Product description</th>
                     <th>Product stoke</th>
+                    <th>Product supplier</th>
                     <th>action</th>
                 </tr>
                 <?php
@@ -87,6 +88,7 @@ if(isset($_POST["delete"]))
                     <td>&nbsp;&nbsp;<?php echo $key[3]?></td>
                     <td>&nbsp;&nbsp;<?php echo $key[4]?></td>
                     <td>&nbsp;&nbsp;<?php echo $key[5]?></td>
+                    <td>&nbsp;&nbsp;<?php echo $key[6]?></td>
                     <td>
                         <!-- <a href="edit_employee.php"><button id="edit">edit</button></a> -->
                         <button id="stoke" name="stoke"  value="<?php echo $key[0];?>" >stoke in</button>&nbsp;

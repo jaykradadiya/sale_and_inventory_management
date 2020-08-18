@@ -158,7 +158,7 @@ if(isset($_POST["getdata"]))
 if(isset($_POST["O_customer_name"]))
 {
     $counter=$_SESSION["empUsername"];
-    $errorname=$erroeEmail=$errorTotal=$errorPid=$errorPqty="";
+    $errorname=$erroeEmail=$errorTotal=$errorPid=$errorPqty=$errorpaid="";
     $i=0;
     $cname=$_POST["O_customer_name"];
     $cemail=$_POST["O_customer_mail"];
@@ -244,14 +244,30 @@ if(isset($_POST["O_customer_name"]))
             }
     }    
     $ptotal=$_POST["O_p_total"];
-
-    if($i==5)
+    $paid=$_POST["O_paid"];
+    if(empty($paid))
+    {
+        $errorpaid="please amount paid by customer";
+    }
+    else
+    {
+        if(!filter_var($paid,FILTER_VALIDATE_INT))
+        {
+            $errorpaid="Enter amount in number form";
+        }
+        else if($paid==$total);
+        {
+            $i++;
+        }   
+    }
+    if($i==6)
     {
     $order=new order();
     $res= $order->takeorder($cname,$cemail,$pids,$pqty,$ptotal,$counter,$date,$total);
     echo $res;
     }
     else{
+        
         ?>
 <script>
 
@@ -260,15 +276,15 @@ var cemail= "<?php echo $erroeEmail;?>";
 var total= "<?php echo $errorTotal;?>";
 var pid= "<?php echo $errorPid;?>";
 var pqty= "<?php echo $errorPqty;?>";
-console.log(cname);
+var paid= "<?php echo $errorpaid;?>";
 $("#errorcname").html(cname);
 $("#errorEmail").html(cemail);
 $("#errorproduct").html(pid);
 $("#errorpqty").html(pqty);
 $("#errorTotal").html(total);
+$("#errorpaid").html(paid);
 
 </script>
-
 
         <?php 
     }

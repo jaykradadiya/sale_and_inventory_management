@@ -51,6 +51,10 @@ if(isset($_POST['addCategory'])=="add")
         {
             header("location:". domain."view_category.php");
         }
+        else if ($res == "Category_name_already_registed")
+        {
+            $errorcname="Category name already registed";
+        }
     }
 }
 if(isset($_POST["back"]))

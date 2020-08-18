@@ -93,8 +93,18 @@ if(isset($_POST['addEmp'])=="add")
         if($i==4)
         {
         $user = new user();
-        echo $user->create_member($email,$username,$password,$type);
-        header("location:". domain."view_employee.php");
+        $res= $user->create_member($email,$username,$password,$type);
+        if($res == "sucess")
+        {header("location:". domain."view_employee.php");
+        }
+        else if($res == "Email_already_registed")
+        {
+            $errorEmail="Email already registed";
+        }
+        else if($res== "Username_already_registed")
+        {
+            $errorUser="Username already registed";
+        }
         }
 }
 

@@ -30,7 +30,7 @@ if(!isset($_SESSION["empEmail"]))
         <div class="sidenav">
         <nav class="sidebar">
             <div class="text">
-                <?php  echo $_SESSION["empEmail"];?>
+                <?php  echo $_SESSION["empUsername"];?>
             </div>
             <ul class="sidelist">
                 <li class="sidelistli list1 <?php if($Page=='Product'){echo 'curr';}?>">
@@ -39,9 +39,9 @@ if(!isset($_SESSION["empEmail"]))
                 <li class="sidelistli list2 <?php if($Page=='Category'){echo 'curr';}?>">
                     <a href="view_category.php" class="list2">Category</a>
                 </li>
-                <!-- <li class="sidelistli list3 <?php if($Page=='Supplier'){echo 'curr';}?>">
+                <li class="sidelistli list3 <?php if($Page=='Supplier'){echo 'curr';}?>">
                     <a href="view_supplier.php" class="list3">Supplier</a>
-                </li> -->
+                </li>
                 <li class="sidelistli <?php if($Page=='Order_view'){echo 'curr';}?>">
                     <a href="view_orders.php" >view orders</a>
                     </li>

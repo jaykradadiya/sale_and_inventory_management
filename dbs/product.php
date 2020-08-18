@@ -48,11 +48,11 @@ class product
     }
     }
     
-    public function create_product($pname,$pcategory,$pprice,$dis,$stoke)
+    public function create_product($pname,$pcategory,$pprice,$dis,$stoke,$supplier)
     {
          if($this->checkName($pname)==1)
             {
-                $sql="INSERT INTO `product`(`product_id`, `product_name`, `product_category`, `product_price`, `product_dis`, `product_stoke`) VALUES (NULL,'$pname',$pcategory,$pprice,'$dis',$stoke)";
+                $sql="INSERT INTO `product`(`product_id`, `product_name`, `product_category`, `product_price`, `product_dis`, `product_stoke`, `product_supplier`) VALUES (NULL,'$pname',$pcategory,$pprice,'$dis',$stoke,$supplier)";
                 // echo $sql;
                 $inres=mysqli_query($this->con,$sql) or die(mysqli_error());
                 if($inres ==1)
@@ -70,9 +70,9 @@ class product
         
     }
 
-    public function update_product($id,$pname,$pcategory,$pprice,$dis,$stoke)
+    public function update_product($id,$pname,$pcategory,$pprice,$dis,$stoke,$supplier)
     {
-        $sql="UPDATE `product` SET`product_name`='$pname',`product_category`=$pcategory,`product_price`=$pprice,`product_dis`='$dis',`product_stoke`=$stoke  WHERE `product_id`=$id";
+        $sql="UPDATE `product` SET`product_name`='$pname',`product_category`=$pcategory,`product_price`=$pprice,`product_dis`='$dis',`product_stoke`=$stoke ,`product_supplier`=$supplier  WHERE `product_id`=$id";
                 // echo $sql;
                 $inres=mysqli_query($this->con,$sql) or die(mysqli_error());
                 if($inres ==1)
@@ -106,7 +106,7 @@ class product
 
 public function getProductdata()
 {
-    $sql="SELECT `product_id`,`product_name`, `category_name`, `product_price`, `product_dis`, `product_stoke` FROM `product`as p,`category` as c WHERE p.product_category=c.category_id";
+    $sql="SELECT `product_id`,`product_name`, `category_name`, `product_price`, `product_dis`, `product_stoke`, `supplier_name` FROM `product`as p,`category` as c,`supplier` as s WHERE p.product_category=c.category_id and p.product_supplier=s.supplier_id";
     // echo $sql;
     $inres=mysqli_query($this->con,$sql) or die(mysqli_error());
     if(mysqli_num_rows($inres)>0)
@@ -128,7 +128,7 @@ public function getProductdata()
 
 public function getProductdatabyid($id)
 {
-    $sql="SELECT `product_id`,`product_name`, `category_name`, `product_price`, `product_dis`, `product_stoke` FROM `product`as p,`category` as c WHERE p.product_category=c.category_id AND`product_id`=$id ";
+    $sql="SELECT * FROM `product`as p,`category` as c WHERE `product_id`=$id ";
     // echo $sql;
     $inres=mysqli_query($this->con,$sql) or die(mysqli_error());
     if(mysqli_num_rows($inres)>0)

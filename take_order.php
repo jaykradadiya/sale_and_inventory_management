@@ -85,6 +85,11 @@ $product=new product();
                             <td><input type="number" name="O_totals" id="O_totals" readonly></td>
                             <td><span id="errorTotal"></span></td>
                         </tr>
+                        <tr>
+                            <th>customer paid</th>
+                            <td><input type="number" name="O_paid" id="O_paid"></td>
+                            <td><span id="errorpaid"></span></td>
+                        </tr>
                     </table>
                     </td>
                 </tr>

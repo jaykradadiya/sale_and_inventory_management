@@ -4,18 +4,21 @@ $Page='Product';
  include("navigation.php");
 include_once("dbs/category.php");
 include_once("dbs/product.php");
+include_once("dbs/supplier.php");
 
 $category = new category();
 $catdata = $category->getcategorydata();
 $product = new product();
-
-$pname=$pcategory=$pprice=$dis=$pstoke="";
-$errorpname=$errorcategory=$errorprice=$errordis=$errorstoke="";
+$supplier=new supplier();
+$sup=$supplier->getSupplierdata();
+$i=0;
+$pname=$pcategory=$pprice=$dis=$pstoke=$psupplier="";
+$errorpname=$errorcategory=$errorprice=$errordis=$errorstoke=$errorsupplier="";
 
 if(isset($_SESSION['edit']))
 {
     $row = $product->getProductdatabyid($_SESSION['edit']);
-}
+}   
 else
 {
     header("location:". domain."view_product.php");
@@ -24,9 +27,7 @@ else
 
 if(isset($_POST["updateProduct"]))
 {
-//     echo "<pre>";
-//  print_r($_POST);
-$pname=$_POST["productname"];
+    $pname=$_POST["productname"];
 	if(empty($pname))
 	{
 		$errorpname="product name is required";
@@ -41,7 +42,7 @@ $pname=$_POST["productname"];
         {
             $i++;
         }
-        }
+        
     }
 
     $dis=$_POST["productname"];
@@ -114,15 +115,33 @@ $pname=$_POST["productname"];
         }   
     }
 
-      if($i==5)
+    $psupplier=$_POST['productsupplier'];
+    if(empty($psupplier))
+    {
+        $errorsupplier="type not seleced";
+    }
+    else
+    {
+        if(!filter_var($psupplier,FILTER_VALIDATE_INT))
+        {
+            $errorsupplier="Invalid email format";
+        }
+        else
+        {
+            $i++;
+        }   
+    }
+
+      if($i==6)
       {  
     
-      $res= $product->update_product($_POST['productid'],$pname,$pcategory,$pprice,$dis,$pstoke);
+      $res= $product->update_product($_POST['productid'],$pname,$pcategory,$pprice,$dis,$pstoke,$psupplier);
       if($res=="Sucess")
       {
         unset($_SESSION['edit']);
         header("location:". domain."view_product.php");
         }
+    }
       
 }
 
@@ -159,20 +178,18 @@ if(isset($_POST["back"]))
             <tr>
                 <td>product category</td>
                 <td>
-                    <div class="custom-select">
-                    <select name="productcategory" id="productcategory" value="<?php echo $row[0][2];?>"  >
+                    <select name="productcategory" id="productcategory" >
                     <?php
                      foreach ($catdata as $key) {
                         ?>
                         
-                        <option value="<?php echo $key[0];?>"><?php echo $key[1];?></option>
+                        <option value="<?php echo $key[0];?>" <?php if($key[0]==$row[0][2]){echo "selected";}?>><?php echo $key[1];?></option>
                         
                         <?php
                      }
                     ?>
 
                    </select>
-                    </div>
                    
                 </td>
                 <td><span><?php echo $errorcategory;?></span></td>
@@ -182,19 +199,24 @@ if(isset($_POST["back"]))
                 <td><input type="text" name="productprice" id="productprice" value="<?php echo $row[0][3];?>" ></td>
                 <td><span><?php echo $errorprice;?></span></td>
             </tr>
-            <!-- <tr>
+            <tr>
                 <td>product supplier</td>
                 <td>
-                    <div class="custom-select">
-                        <select name="productsupplier" id="productsupplier">
-                        <option value="1" selected>mi</option>
-                        <option value="2">olx</option>
-                        <option value="3">amazon</option>
-                    </select>
-                    </div>
-                
+                    <select name="productsupplier" id="productsupplier"  >
+                    <?php
+                    foreach ($sup as $key) {
+                        ?>
+                           <option value="<?php echo $key[0];?>" <?php if($key[0]==$row[0][6]){echo "selected";}?> ><?php echo $key[1];?></option>
+                        <?php
+                    }
+                    ?>
+                      
+                   </select>
+                    
                 </td>
-            </tr> -->
+                <td><span><?php echo $errorsupplier;?></span></td>
+
+            </tr>
             <tr>
                 <td>product discription</td>
                 <td><input type="text" name="productdiscription" id="productdiscription" value="<?php echo $row[0][4];?>" ></td>
