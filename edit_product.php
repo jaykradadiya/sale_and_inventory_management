@@ -161,14 +161,14 @@ if(isset($_POST["back"]))
 </head>
 <body>
     <div id="masterTable">
-    <form action="" method="post">
+    <form action="" method="post" enctype="multipart/form-data">
         <table>
             <tr>
                 <h1>edit product</h1>
             </tr>
             <tr>
                 <td>product id</td>
-                <td><input type="text" name="productid" id="productid" value="<?php echo $row[0][0];?>" readonly></td>
+                <td><input type="text" name="productid" id="productid" value="<?php echo $row[0][0];?>" disabled></td>
             </tr>
             <tr>
                 <td>product name</td>
@@ -226,6 +226,14 @@ if(isset($_POST["back"]))
                 <td>product stoke</td>
                 <td><input type="text" name="productstoke" id="productstoke" value="<?php echo $row[0][5];?>" ></td>
                 <td><span><?php echo $errorstoke;?></span></td>
+            </tr>
+            
+            <tr>
+                <td>picture</td>
+                <!-- <td><input type="file" name="product_pic" id="product_pic"></td> -->
+                <td>
+                    <img src="<?php echo "pic/".$row[0][7]?>" id="viewimg" alt="<?php echo $row[0][7]?>" srcset="">
+                    </td>
             </tr>
             <tr>
             <td>

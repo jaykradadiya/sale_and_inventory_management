@@ -3,8 +3,9 @@
 $Page='Emp';
 include("navigation.php");
 include_once("dbs/user.php");
-$email=$password=$username=$type="";
-$errorEmail=$errorUser=$errorPass=$errorType="";
+include_once("dbs/ftp.php");
+$email=$password=$username=$type=$pic="";
+$errorEmail=$errorUser=$errorPass=$errorType=$errorfile=$ftpres="";
 $i=0;
 if(isset($_POST['addEmp'])=="add")
 {
@@ -58,7 +59,7 @@ if(isset($_POST['addEmp'])=="add")
 	{
         if(strlen($password)>5)
         {
-		if(!preg_match("/^(?=\S*[A-Za-z])(?=\S*[^\w\s])\S{6,}$/", $password))
+		if(!preg_match("/^[A-Za-z_0-9]{6,}$/", $password))
 		{
 			$errorPass="password should be contain capital,small and special character";
         }
@@ -89,22 +90,45 @@ if(isset($_POST['addEmp'])=="add")
             $i++;
         }   
     }
+    $pic=$_FILES["emp_pic"]["tmp_name"];
+    if(empty($pic))
+    {
+        $errorfile="file is not selected";
+    }
+    else{
+        $ftp=new ftp();
+        $ftpres=$ftp->putfile($_FILES["emp_pic"]["name"],$pic);
+        if($ftpres=="FTP_upload_has_failed!")
+        {
+            $errorfile="file not uploaded";
+        }
+        else
+        {
+            $i++;
+        }
+    }
     
-        if($i==4)
+        if($i==5)
         {
         $user = new user();
-        $res= $user->create_member($email,$username,$password,$type);
+        $res= $user->create_member($email,$username,$password,$type,$ftpres);
         if($res == "sucess")
         {header("location:". domain."view_employee.php");
         }
         else if($res == "Email_already_registed")
         {
+            $ftp->delpic($_FILES["emp_pic"]["name"]);
             $errorEmail="Email already registed";
         }
         else if($res== "Username_already_registed")
         {
+            $ftp->delpic($_FILES["emp_pic"]["name"]);
             $errorUser="Username already registed";
         }
+        }
+        else
+        {
+            $ftp->delpic($_FILES["emp_pic"]["name"]);
         }
 }
 
@@ -125,7 +149,7 @@ if(isset($_POST["back"]))
 </head>
 <body>
     <div id="masterTable">
-    <form  method="post">
+    <form  method="post" enctype="multipart/form-data">
         <table>
         <tr>
                 <h1>add Employee</h1>
@@ -159,6 +183,11 @@ if(isset($_POST["back"]))
                 <td>Password</td>
                 <td><input type="password" name="emp_password" id="emp_password" value="<?php echo $password;?>" ></td>
                 <td><span><?php echo $errorPass;?></span></td>
+            </tr>
+            <tr>
+                <td>picture</td>
+                <td><input type="file" name="emp_pic" id="emp_pic" accept="image/*" value="<?php echo $pic;?>" ></td>
+                <td><span><?php echo $errorfile;?></span></td>
             </tr>
             <tr>
                 <td>

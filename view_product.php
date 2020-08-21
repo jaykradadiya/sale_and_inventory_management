@@ -3,9 +3,10 @@
 $Page='Product';
 include("navigation.php");
 include_once("dbs/product.php");
+include_once("dbs/ftp.php");
 $product= new product();
 $row= $product->getProductdata();
-
+$ftp=new ftp();
 if(isset($_POST["search"]))
 {
     $row= $product->getProductsearchdata($_POST["p_search"]);
@@ -13,6 +14,16 @@ if(isset($_POST["search"]))
 else
 {
     $row= $product->getProductdata();
+}
+foreach($row as $key)
+{
+   if( $ftp->getfile($key[7],$key[7])=="success")
+   {
+
+   }
+   else{
+
+   }
 }
 if(isset($_POST["stoke"]))
 {
@@ -72,6 +83,7 @@ if(isset($_POST["delete"]))
                     <th>Product description</th>
                     <th>Product stoke</th>
                     <th>Product supplier</th>
+                    <th>Picture</th>
                     <th>action</th>
                 </tr>
                 <?php
@@ -89,6 +101,10 @@ if(isset($_POST["delete"]))
                     <td>&nbsp;&nbsp;<?php echo $key[4]?></td>
                     <td>&nbsp;&nbsp;<?php echo $key[5]?></td>
                     <td>&nbsp;&nbsp;<?php echo $key[6]?></td>
+                    <td>
+                    <img src="<?php echo "pic/".$key[7]?>" id="viewimg" alt="<?php echo $key[7]?>" srcset="">
+                    
+                    </td>
                     <td>
                         <!-- <a href="edit_employee.php"><button id="edit">edit</button></a> -->
                         <button id="stoke" name="stoke"  value="<?php echo $key[0];?>" >stoke in</button>&nbsp;

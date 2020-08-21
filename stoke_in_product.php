@@ -94,17 +94,17 @@ if(isset($_POST["back"]))
             </tr>
             <tr>
                 <td>product id</td>
-                <td><input type="text" name="productid" id="productid" value="<?php echo $row[0][0];?>" readonly></td>
+                <td><input type="text" name="productid" id="productid" value="<?php echo $row[0][0];?>" disabled></td>
             </tr>
             <tr>
                 <td>product name</td>
-                <td><input type="text" name="productname" id="productname" value="<?php echo $row[0][1];?>" readonly></td>
+                <td><input type="text" name="productname" id="productname" value="<?php echo $row[0][1];?>" disabled></td>
                 <td><span id="p_name_err"></span></td>
             </tr>
             <tr>
                 <td>product category</td>
                 <td>
-                    <select name="productcategory" id="productcategory" readonly>
+                    <select name="productcategory" id="productcategory" disabled>
                     <?php
                      foreach ($catdata as $key) {
                         ?>
@@ -122,13 +122,13 @@ if(isset($_POST["back"]))
             </tr>
             <tr>
                 <td>product price</td>
-                <td><input type="text" name="productprice" id="productprice" value="<?php echo $row[0][3];?>" readonly></td>
+                <td><input type="text" name="productprice" id="productprice" value="<?php echo $row[0][3];?>" disabled></td>
                 <td><span id="p_price_err"></span></td>
             </tr>
             <tr>
                 <td>product supplier</td>
                 <td>
-                    <select name="productsupplier" id="productsupplier"readonly >
+                    <select name="productsupplier" id="productsupplier"disabled >
                     <?php
                     foreach ($sup as $key) {
                         ?>
@@ -143,10 +143,16 @@ if(isset($_POST["back"]))
             </tr>
             <tr>
                 <td>product discription</td>
-                <td><input type="text" name="productdiscription" id="productdiscription" value="<?php echo $row[0][4];?>"readonly ></td>
+                <td><input type="text" name="productdiscription" id="productdiscription" value="<?php echo $row[0][4];?>"disabled ></td>
                 <td><span id="p_dis_err"></span></td>
             </tr>
-            
+            <tr>
+                <td>picture</td>
+                <!-- <td><input type="file" name="product_pic" id="product_pic"></td> -->
+                <td>
+                    <img src="<?php echo "pic/".$row[0][7]?>" id="viewimg" alt="<?php echo $row[0][7]?>" srcset="">
+                    </td>
+            </tr>
             <tr>
                 <td>product available stoke</td>
                 <td><input type="text" name="productstoke" id="productstoke" value="<?php echo $row[0][5];?>" ></td>

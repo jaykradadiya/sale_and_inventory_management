@@ -89,7 +89,7 @@ if(isset($_POST["back"]))
             </tr>
             <tr>
                 <td>category Id</td>
-                <td><input type="text" name="categoryid" id="categoryid" value="<?php echo $row[0][0];?>" readonly></td>
+                <td><input type="text" name="categoryid" id="categoryid" value="<?php echo $row[0][0];?>" disabled></td>
             </tr>
             <tr>
                 <td>category name</td>

@@ -66,13 +66,13 @@ class user
         }
 
     }
-    public function create_member($email,$username,$password,$memberType)
+    public function create_member($email,$username,$password,$memberType,$pic)
     {
         if($this->checkEmail($email)==1)
         {
             if($this->checkUsername($username)==1)
             {
-                $sql="INSERT INTO `emp`(`empID`, `empEmail`, `empUsername`, `empPassword`, `empType`) VALUES (NULL,'$email','$username','$password',$memberType)";
+                $sql="INSERT INTO `emp`(`empID`, `empEmail`, `empUsername`, `empPassword`, `empType`,`pic`) VALUES (NULL,'$email','$username','$password',$memberType,'$pic')";
                 // echo $sql;
                 $inres=mysqli_query($this->con,$sql) or die(mysqli_error());
                 if($inres ==1)

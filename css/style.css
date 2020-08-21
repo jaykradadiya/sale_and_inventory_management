@@ -11,7 +11,7 @@
 body{
 
   /* background: linear-gradient(110.02038057017865deg, rgba(48, 245, 251,1) 5.384114583333334%,rgba(23, 142, 203,1) 90.54036458333333%); */
-  background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
+  background: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
   }
 .upnav{
     display: flex;

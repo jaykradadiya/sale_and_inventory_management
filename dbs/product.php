@@ -48,11 +48,11 @@ class product
     }
     }
     
-    public function create_product($pname,$pcategory,$pprice,$dis,$stoke,$supplier)
+    public function create_product($pname,$pcategory,$pprice,$dis,$stoke,$supplier,$file)
     {
          if($this->checkName($pname)==1)
             {
-                $sql="INSERT INTO `product`(`product_id`, `product_name`, `product_category`, `product_price`, `product_dis`, `product_stoke`, `product_supplier`) VALUES (NULL,'$pname',$pcategory,$pprice,'$dis',$stoke,$supplier)";
+                $sql="INSERT INTO `product`(`product_id`, `product_name`, `product_category`, `product_price`, `product_dis`, `product_stoke`, `product_supplier`,`product_pic`) VALUES (NULL,'$pname',$pcategory,$pprice,'$dis',$stoke,$supplier,'$file')";
                 // echo $sql;
                 $inres=mysqli_query($this->con,$sql) or die(mysqli_error());
                 if($inres ==1)
@@ -106,7 +106,7 @@ class product
 
 public function getProductdata()
 {
-    $sql="SELECT `product_id`,`product_name`, `category_name`, `product_price`, `product_dis`, `product_stoke`, `supplier_name` FROM `product`as p,`category` as c,`supplier` as s WHERE p.product_category=c.category_id and p.product_supplier=s.supplier_id";
+    $sql="SELECT `product_id`,`product_name`, `category_name`, `product_price`, `product_dis`, `product_stoke`, `supplier_name`,`product_pic` FROM `product`as p,`category` as c,`supplier` as s WHERE p.product_category=c.category_id and p.product_supplier=s.supplier_id";
     // echo $sql;
     $inres=mysqli_query($this->con,$sql) or die(mysqli_error());
     if(mysqli_num_rows($inres)>0)

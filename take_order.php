@@ -38,7 +38,7 @@ $product=new product();
                     <table >
                         <tr>
                             <th>date</th>
-                            <td><input type="date" name="O_date" id="O_date" value="<?php echo date('Y-m-d');?>" readonly></td>
+                            <td><input type="date" name="O_date" id="O_date" value="<?php echo date('Y-m-d');?>" disabled></td>
                         </tr>
                         <tr>
                             <th>Customer Name</th>
@@ -82,7 +82,7 @@ $product=new product();
                         </tr>
                         <tr>
                             <th>total</th>
-                            <td><input type="number" name="O_totals" id="O_totals" readonly></td>
+                            <td><input type="number" name="O_totals" id="O_totals" disabled></td>
                             <td><span id="errorTotal"></span></td>
                         </tr>
                         <tr>

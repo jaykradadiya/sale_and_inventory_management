@@ -4,14 +4,15 @@ $Page='Product';
 include_once("navigation.php");
 include_once("dbs/product.php");
 include_once("dbs/category.php");
+include_once("dbs/ftp.php");
 include_once("dbs/supplier.php");
 $category =new category();
 $cat=$category->getCategorydata();
 $supplier=new supplier();
 $sup=$supplier->getSupplierdata();
 
-$pname=$pcategory=$pprice=$dis=$pstoke=$psupplier="";
-$errorpname=$errorcategory=$errorprice=$errordis=$errorstoke=$errorsupplier="";
+$pname=$pcategory=$pprice=$dis=$pstoke=$psupplier=$pic="";
+$errorpname=$errorcategory=$errorprice=$errordis=$errorstoke=$errorsupplier=$errorfile="";
 
 if(isset($_POST['addProduct'])=="add")
 {
@@ -118,19 +119,41 @@ if(isset($_POST['addProduct'])=="add")
             $i++;
         }   
     }
+    $pic=$_FILES["emp_pic"]["tmp_name"];
+    if(empty($pic))
+    {
+        $errorfile="file is not selected";
+    }
+    else{
+        $ftp=new ftp();
+        $ftpres=$ftp->putfile($_FILES["emp_pic"]["name"],$pic);
+        if($ftpres=="FTP_upload_has_failed!")
+        {
+            $errorfile="file not uploaded";
+        }
+        else
+        {
+            $i++;
+        }
+    }
 
       if($i==6)
       {  
         $product = new product();
-        $res= $product->create_product($pname,$pcategory,$pprice,$_POST["productdiscription"],$_POST['productstoke']);
+        $res= $product->create_product($pname,$pcategory,$pprice,$_POST["productdiscription"],$_POST['productstoke'],$ftpres);
         if($res=="Sucess")
         {
             header("location:". domain."view_product.php");
         }
         else if($res == "product_name_already_registed")
         {
+            $ftp->delpic($_FILES["emp_pic"]["name"]);
             $errorpname="product name already registed";
         }
+    }
+    else
+    {
+        $ftp->delpic($_FILES["emp_pic"]["name"]);
     }
 }
 
@@ -150,7 +173,7 @@ if(isset($_POST["back"]))
 </head>
 <body>
     <div id="masterTable">
-    <form action="" method="post">
+    <form action="" method="post" enctype="multipart/form-data">
         <table>
             <tr>
                 <h1>add product</h1>
@@ -211,6 +234,11 @@ if(isset($_POST["back"]))
                 <td>product stoke</td>
                 <td><input type="text" name="productstoke" id="productstoke" <?php echo $pstoke;?>></td>
                 <td><span><?php echo $errorstoke;?></span></td>
+            </tr>
+            <tr>
+                <td>picture</td>
+                <td><input type="file" name="product_pic" id="product_pic" accept="image/*" value="<?php echo $pic;?>" ></td>
+                <td><span><?php echo $errorfile;?></span></td>
             </tr>
             <tr>
                 <td>

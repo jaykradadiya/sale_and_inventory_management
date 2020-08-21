@@ -3,11 +3,22 @@
 $Page='Emp';
 include("navigation.php");
 include_once("dbs/user.php");
+include_once("dbs/ftp.php");
 $emp = new user();
 $row = $emp->getEmpdata();
+$ftp=new ftp();
 // echo "<pre>";
 // print_r($row);
+foreach($row as $key)
+{
+   if( $ftp->getfile($key[5],$key[5])=="success")
+   {
 
+   }
+   else{
+
+   }
+}
 if(isset($_POST["search"]))
 {
     $row = $emp->getempserchdata($_POST["e_search"]);
@@ -69,6 +80,7 @@ if(isset($_POST["delete"]))
                     <th>employee email</th>
                     <th>employee UserName</th>
                     <th>employee type</th>
+                    <th>employee pic</th>
                     <th>action</th>
                 </tr>
                 <?php
@@ -84,6 +96,10 @@ if(isset($_POST["delete"]))
                     <td>&nbsp;&nbsp;<?php echo $key[1]?></td>
                     <td>&nbsp;&nbsp;<?php echo $key[2]?></td>
                     <td>&nbsp;&nbsp;<?php echo $key[4]?></td>
+                    <td>
+                    <img src="<?php echo "pic/".$key[5]?>" id="viewimg" alt="<?php echo $key[5]?>" srcset="">
+                    
+                    </td>
                     <td>
                         <!-- <a href="edit_employee.php"><button id="edit">edit</button></a> -->
                         <button name="edit" id="edit" value="<?php echo $key[0];?>">edit</button>&nbsp;

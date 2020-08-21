@@ -3,9 +3,11 @@
 $Page='Emp';
 include("navigation.php");
 include_once("dbs/user.php");
+include_once("dbs/ftp.php");
 $member=new user();
 
-$password=$errorPass="";
+$password=$errorPass=$errorfile="";
+$i=0;
 if(isset($_SESSION['edit']))
 {
     $row = $member->getmemberdata($_SESSION['edit']);
@@ -27,12 +29,13 @@ if(isset($_POST["updateEmp"]))
 	{
         if(strlen($password)>5)
         {
-		if(!preg_match("/^(?=\S*[A-Za-z])(?=\S*[^\w\s])\S{6,}$/", $password))
+		if(!preg_match("/^[A-Za-z_0-9]{6,}$/", $password))
 		{
 			$errorPass="password should be contain capital,small and special character";
         }
         else
         {
+            $i++;
             $member->update_member($id,$password,$type);
             unset($_SESSION['edit']);
             header("location:". domain."view_employee.php");
@@ -43,6 +46,24 @@ if(isset($_POST["updateEmp"]))
             $errorPass="password should be contain 6 character";
         }
     }
+
+    // $pic=$_FILES["emp_pic"]["tmp_name"];
+    // if(empty($pic))
+    // {
+    //     $errorfile="file is not selected";
+    // }
+    // else{
+    //     $ftp=new ftp();
+    //     $ftpres=$ftp->putfile($_FILES["emp_pic"]["name"],$pic);
+    //     if($ftpres=="FTP_upload_has_failed!")
+    //     {
+    //         $errorfile="file not uploaded";
+    //     }
+    //     else
+    //     {
+    //         $i++;
+    //     }
+    // }
     
 }
 if(isset($_POST["back"]))
@@ -60,22 +81,22 @@ if(isset($_POST["back"]))
 </head>
 <body>
     <div id="masterTable">
-    <form action="" method="post">
+    <form  method="post" enctype="multipart/form-data">
         <table>
             <tr>
                 <h1>Edit Employee</h1>
             </tr>
             <tr>
                 <td>Employee ID</td>
-                <td><input type="text" name="employee_id" id="employee_id" value="<?php echo $row[0][0];?>" readonly></td>
+                <td><input type="text" name="employee_id" id="employee_id" value="<?php echo $row[0][0];?>" disabled></td>
             </tr>
             <tr>
                 <td>Employee Email</td>
-                <td><input type="text" name="employee_email" id="employee_email" value="<?php echo $row[0][1];?>" readonly></td>
+                <td><input type="text" name="employee_email" id="employee_email" value="<?php echo $row[0][1];?>" disabled></td>
             </tr>
             <tr>
                 <td>Employee Username</td>
-                <td><input type="text" name="employee_username" id="employee_username" value="<?php echo $row[0][2];?>" readonly></td>
+                <td><input type="text" name="employee_username" id="employee_username" value="<?php echo $row[0][2];?>" disabled></td>
             </tr>
             <tr>
                 <td>employee type</td>
@@ -93,6 +114,14 @@ if(isset($_POST["back"]))
                 <td>Password</td>
                 <td><input type="password" name="emp_password" id="emp_password" value="<?php echo $row[0][3];?>" ></td>
                 <td><span><?php echo $errorPass;?></span></td>
+            </tr>
+            <tr>
+                <td>picture</td>
+                <!-- <td><input type="file" name="emp_pic" id="emp_pic" accept="image/*" value="<?php echo "pic/".$row[0][5]?>"></td> -->
+                <td>
+                    <img src="<?php echo "pic/".$row[0][5]?>" id="viewimg" alt="<?php echo $row[0][5]?>" srcset="">
+                    </td>
+                    <td><span><?php echo $errorfile;?></span></td>
             </tr>
             <tr>
                 <td>

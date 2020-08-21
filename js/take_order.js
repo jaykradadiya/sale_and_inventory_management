@@ -62,10 +62,10 @@ $(document).ready(function()
             })
             row+="</select>";
          row+="</td>";
-         row+="<td><input type='number' name='O_p_price[]' id='O_p_price' readonly></td>";
-         row+="<td><input type='number' name='O_p_qty[]' id='O_p_qty' readonly></td>";
+         row+="<td><input type='number' name='O_p_price[]' id='O_p_price' disabled></td>";
+         row+="<td><input type='number' name='O_p_qty[]' id='O_p_qty' disabled></td>";
          row+="<td><input type='number' name='O_p_b_qty[]' id='O_p_b_qty' class='O_p_b_qty' min='0'></td>";
-         row+="<td><input type='number' name='O_p_total[]' id='O_p_total' class='O_p_total' readonly></td>";
+         row+="<td><input type='number' name='O_p_total[]' id='O_p_total' class='O_p_total' disabled></td>";
          row+="</tr>";
          $("tbody#product_buy").append(row);
          getselected();
